@@ -1,9 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    cors: {
+      origin: ['http://localhost:3001'], // 允许跨域的源
+    },
+  });
+  app.useGlobalFilters(new HttpExceptionFilter());
   const options = new DocumentBuilder()
     .setTitle('NestJS博客API')
     .setVersion('1.0')
