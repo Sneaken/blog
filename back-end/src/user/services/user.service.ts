@@ -51,12 +51,12 @@ export class UserService {
   /**
    * 用户登陆
    */
-  async login(username: string, password: string) {
+  async login(account: string, password: string) {
     const user = await this.userModel.find({
       $or: [
         //多条件，数组
-        { phone: username },
-        { email: username },
+        { phone: account },
+        { email: account },
       ],
       password: password,
     });
@@ -68,6 +68,41 @@ export class UserService {
       return {
         code: ApiErrorCode.USER_LOGIN_INVALID,
         message: '登录账户或登录密码不正确',
+      };
+    }
+  }
+
+  /**
+   * 用户信息
+   */
+  async userInfo(account: string) {
+    const user = await this.userModel
+      .find(
+        {
+          $or: [
+            //多条件，数组
+            { phone: account },
+            { email: account },
+          ],
+        },
+        {
+          nickname: 1,
+          phone: 1,
+          email: 1,
+          _id: 0,
+        },
+      )
+      .limit(1);
+    if (user.length === 1) {
+      return {
+        code: ApiErrorCode.SUCCESS,
+        message: '',
+        data: user[0],
+      };
+    } else {
+      return {
+        code: ApiErrorCode.USER_NO_EXIST,
+        message: '用户账户不存在',
       };
     }
   }

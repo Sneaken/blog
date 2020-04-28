@@ -34,7 +34,7 @@ interface IGetDevice {
   (width: number): 'phone' | 'tablet' | 'desktop';
 }
 export default function BasicLayout({
-  children
+  children,
 }: {
   children: React.ReactNode;
 }) {
@@ -56,7 +56,7 @@ export default function BasicLayout({
   const [device, setDevice] = useState(getDevice(NaN));
   window.addEventListener('optimizedResize', (e: CustomEvent) => {
     setDevice(
-      getDevice(e && (e.target as Window) && (e.target as Window).innerWidth)
+      getDevice(e && (e.target as Window) && (e.target as Window).innerWidth),
     );
   });
   return (
@@ -64,7 +64,7 @@ export default function BasicLayout({
       <Shell
         type="brand"
         style={{
-          minHeight: '100vh'
+          minHeight: '100vh',
         }}
       >
         <Shell.Branding>
@@ -76,13 +76,12 @@ export default function BasicLayout({
         <Shell.Navigation
           direction="hoz"
           style={{
-            marginRight: 10
+            marginRight: 10,
           }}
         >
           <GlobalSearch />
         </Shell.Navigation>
         <Shell.Action>
-          <Notice />
           <SolutionLink />
           <HeaderAvatar />
         </Shell.Action>

@@ -25,8 +25,8 @@ import FeedbackSuccess from '@/pages/FeedbackSuccess';
 import FeedbackForbidden from '@/pages/FeedbackForbidden';
 import FeedbackNotFound from '@/pages/FeedbackNotFound';
 import FeedbackServerError from '@/pages/FeedbackServerError';
-import Settings from '@/pages/Settings';
 import Person from '@/pages/Person';
+import BlogWrite from '@/pages/BlogWrite';
 
 const routerConfig = [
   {
@@ -144,12 +144,16 @@ const routerConfig = [
         component: FeedbackServerError,
       },
       {
-        path: '/settings',
-        component: Settings,
-      },
-      {
         path: '/person',
         component: Person,
+      },
+      {
+        path: '/blog/write',
+        component: BlogWrite,
+      },
+      {
+        path: '/blog/update',
+        component: BlogWrite,
       },
       {
         path: '/',

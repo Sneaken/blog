@@ -1,4 +1,12 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserService } from '../services/user.service';
 import { RegisterUserDto } from '../dto/user.dto';
@@ -28,6 +36,7 @@ export class UserController {
     return result;
   }
   @Post('register')
+  @HttpCode(201)
   @ApiOperation({ summary: '注册' })
   async register(
     @Body('nickname') nickname: string,
@@ -44,6 +53,16 @@ export class UserController {
     const result = await this.userService.register(registerUserDto);
     if (result.code !== ApiErrorCode.SUCCESS) {
       throw new ApiException(result.message, result.code, HttpStatus.CONFLICT);
+    }
+    return result;
+  }
+
+  @Get('info')
+  @ApiOperation({ summary: '用户信息' })
+  async information(@Query('account') account: string) {
+    const result = await this.userService.userInfo(account);
+    if (result.code !== ApiErrorCode.SUCCESS) {
+      throw new ApiException(result.message, result.code, HttpStatus.NOT_FOUND);
     }
     return result;
   }

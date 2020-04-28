@@ -4,25 +4,27 @@
   "description": "使用 TypeScript，包含大量 UI 区块，比如图表、表单等。",
   "dependencies": {
     "@alifd/next": "^1.19.4",
+    "@alifd/theme-design-pro": "^0.6.2",
+    "@antv/data-set": "^0.10.2",
+    "@types/react": "^16.9.13",
+    "@types/react-dom": "^16.9.4",
+    "bizcharts": "^3.5.6",
+    "markdown-it": "^10.0.0",
     "moment": "^2.24.0",
+    "prop-types": "^15.5.8",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-intl": "^2.8.0",
-    "@antv/data-set": "^0.10.2",
-    "bizcharts": "^3.5.6",
-    "@alifd/theme-design-pro": "^0.6.2",
-    "prop-types": "^15.5.8",
-    "@types/react": "^16.9.13",
-    "@types/react-dom": "^16.9.4"
+    "react-markdown-editor-lite": "^1.0.2"
   },
   "devDependencies": {
     "@ice/spec": "^1.0.0",
     "build-plugin-fusion": "^0.1.0",
+    "build-plugin-fusion-material": "^0.1.5",
     "build-plugin-moment-locales": "^0.1.0",
     "eslint": "^6.0.1",
     "ice.js": "^1.0.0",
-    "stylelint": "^13.2.0",
-    "build-plugin-fusion-material": "^0.1.5"
+    "stylelint": "^13.2.0"
   },
   "scripts": {
     "start": "icejs start --port 3001",
