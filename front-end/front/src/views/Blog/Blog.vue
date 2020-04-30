@@ -7,8 +7,8 @@
           main
         </main>
       </div>
-      <aside class="blog-aside-left">左侧边栏</aside>
-      <aside class="blog-aside-right">右侧边栏</aside>
+      <blog-aside-left class="blog-aside-left" />
+      <blog-aside-right class="blog-aside-right" />
     </div>
     <blog-footer />
   </div>
@@ -18,15 +18,17 @@
 import { Component, Vue } from 'vue-property-decorator';
 import BlogBanner from '@/views/Blog/components/BlogBanner.vue';
 import BlogFooter from '@/views/Blog/components/BlogFooter.vue';
+import BlogAsideLeft from '@/views/Blog/components/BlogAsideLeft.vue';
+import BlogAsideRight from '@/views/Blog/components/BlogAsideRight.vue';
 @Component({
-  components: { BlogFooter, BlogBanner },
+  components: { BlogAsideRight, BlogAsideLeft, BlogFooter, BlogBanner },
 })
 export default class Blog extends Vue {}
 </script>
 
 <style lang="less" scoped>
-@leftWidth: 350px;
-@rightWidth: 700px;
+@leftWidth: 400px;
+@rightWidth: 600px;
 @mainHeight: 1000px;
 .blog-container {
   overflow: hidden;
