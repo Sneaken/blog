@@ -21,7 +21,7 @@ export default class Card extends Vue {
   private header?: {};
   @Prop({ type: Object })
   private bodyStyle?: {};
-  @Prop({ type: String })
+  @Prop({ type: String, default: 'never' })
   private shadow?: 'always' | 'hover' | 'never';
 }
 </script>

@@ -25,6 +25,18 @@
         <span class="level-item-number">{{ tags }}</span>
       </li>
     </ul>
+    <ul class="level">
+      <li class="level-item icon">
+        <sk-a href="https://github.com/Sneaken" title="github">
+          <sk-icon icon="github" size="22px" />
+        </sk-a>
+      </li>
+      <li class="level-item icon">
+        <sk-a href="https://user.qzone.qq.com/924393527" title="QQ空间">
+          <sk-icon icon="QQ" size="22px" />
+        </sk-a>
+      </li>
+    </ul>
   </card>
 </template>
 
@@ -32,8 +44,9 @@
 import { Component, Vue } from 'vue-property-decorator';
 import Card from '@/components/Card.vue';
 import SkIcon from '@/components/SkIcon.vue';
+import SkA from '@/components/SkA.vue';
 @Component({
-  components: { SkIcon, Card },
+  components: { SkA, SkIcon, Card },
 })
 export default class CardInfo extends Vue {
   private article = 0;
@@ -65,6 +78,10 @@ export default class CardInfo extends Vue {
   .level-item-number {
     font-size: 50px;
     font-weight: bolder;
+  }
+  .icon {
+    margin: 0 10px;
+    font-size: 10px;
   }
 }
 </style>

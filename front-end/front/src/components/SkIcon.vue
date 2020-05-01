@@ -1,8 +1,14 @@
 <template functional>
-  <i :class="['anticon', `icon-${props.icon}`]"></i>
+  <i
+    :class="['anticon', `icon-${props.icon}`]"
+    :style="{
+      fontSize: props.size,
+      color: props.color,
+    }"
+  />
 </template>
-<script>
-export default {
-  name: 'SkIcon',
-};
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+@Component
+export default class SkIcon extends Vue {}
 </script>
