@@ -31,8 +31,9 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Card from '@/components/Card.vue';
+import SkIcon from '@/components/SkIcon.vue';
 @Component({
-  components: { Card },
+  components: { SkIcon, Card },
 })
 export default class CardInfo extends Vue {
   private article = 0;

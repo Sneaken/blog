@@ -3,9 +3,7 @@
     <blog-banner />
     <div class="blog-container">
       <div class="blog-container-center">
-        <main class="blog-main">
-          main
-        </main>
+        <blog-main class="blog-main" />
       </div>
       <blog-aside-left class="blog-aside-left" />
       <blog-aside-right class="blog-aside-right" />
@@ -20,8 +18,15 @@ import BlogBanner from '@/views/Blog/components/BlogBanner.vue';
 import BlogFooter from '@/views/Blog/components/BlogFooter.vue';
 import BlogAsideLeft from '@/views/Blog/components/BlogAsideLeft.vue';
 import BlogAsideRight from '@/views/Blog/components/BlogAsideRight.vue';
+import BlogMain from '@/views/Blog/components/BlogMain.vue';
 @Component({
-  components: { BlogAsideRight, BlogAsideLeft, BlogFooter, BlogBanner },
+  components: {
+    BlogMain,
+    BlogAsideRight,
+    BlogAsideLeft,
+    BlogFooter,
+    BlogBanner,
+  },
 })
 export default class Blog extends Vue {}
 </script>
@@ -41,19 +46,19 @@ export default class Blog extends Vue {}
   margin-left: @leftWidth;
   margin-right: @rightWidth;
   height: @mainHeight;
-  background-color: #94e8ff;
+  /*background-color: #94e8ff;*/
 }
 .blog-aside-left {
   float: left;
   margin-left: -100%;
   width: @leftWidth;
-  background-color: #ffb5bf;
+  /*background-color: #ffb5bf;*/
 }
 .blog-aside-right {
   float: left;
   margin-left: -@rightWidth;
   width: @rightWidth;
-  background-color: #8990d5;
+  /*background-color: #8990d5;*/
 }
 .footer {
   text-align: center;
