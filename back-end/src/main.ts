@@ -6,7 +6,7 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: {
-      origin: ['http://localhost:3001'], // 允许跨域的源
+      origin: ['http://localhost:3001', 'http://localhost:8080'], // 允许跨域的源
     },
   });
   app.useGlobalFilters(new HttpExceptionFilter());

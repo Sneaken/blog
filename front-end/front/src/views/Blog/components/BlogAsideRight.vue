@@ -17,16 +17,18 @@ export default class BlogAsideRight extends Vue {}
 </script>
 
 <style lang="less" scoped>
-.aside-right {
-  box-sizing: border-box;
-  padding: 0 8vw 5vh 4vw; /* 这个组件内部只能通过这个改边距 */
-}
-.aside-right-card {
-  &:first-child {
-    margin-top: 15vh;
+@media (min-width: 900px) {
+  .aside-right {
+    box-sizing: border-box;
+    padding: 0 8vw 5vh 4vw; /* 这个组件内部只能通过这个改边距 */
   }
-  &:not(:last-child) {
-    margin-bottom: 20px;
+  .aside-right-card {
+    &:first-child {
+      margin-top: 15vh;
+    }
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
   }
 }
 </style>

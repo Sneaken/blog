@@ -32,9 +32,9 @@ export default class Blog extends Vue {}
 </script>
 
 <style lang="less" scoped>
-@leftWidth: 400px;
-@rightWidth: 600px;
-@mainHeight: 1000px;
+@leftWidth: 20vw;
+@rightWidth: 35vw;
+@mainHeight: 300px;
 .blog-container {
   overflow: hidden;
 }
@@ -59,6 +59,14 @@ export default class Blog extends Vue {}
   margin-left: -@rightWidth;
   width: @rightWidth;
   /*background-color: #8990d5;*/
+}
+@media (min-width: 900px) {
+  .blog-aside-left {
+    min-width: 300px;
+  }
+  .blog-aside-right {
+    min-width: 525px;
+  }
 }
 .footer {
   text-align: center;

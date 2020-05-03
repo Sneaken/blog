@@ -19,16 +19,19 @@ export default class BlogAsideLeft extends Vue {}
 </script>
 
 <style lang="less" scoped>
-.aside-left {
-  box-sizing: border-box;
-  padding: 20px; /* 这个组件内部 只能通过这个改边距了 */
-}
-.aside-left-card {
-  &:first-child {
-    margin-top: 10vh;
+@media (min-width: 900px) {
+  .aside-left {
+    box-sizing: border-box;
+    padding: 20px; /* 这个组件内部 只能通过这个改边距了 */
   }
-  &:not(:last-child) {
-    margin-bottom: 20px;
+  .aside-left-card {
+    &:first-child {
+      margin-top: 10vh;
+    }
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
   }
 }
+
 </style>

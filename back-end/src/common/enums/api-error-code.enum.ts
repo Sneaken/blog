@@ -7,4 +7,6 @@ export enum ApiErrorCode {
   USER_NO_EXIST = 'A0201', // 用户不存在
   BLOG_INFO_ERROR = 'B0100', // 查询博客分类标签出错
   BLOG_CREATE_ERROR = 'B0101', // 博客创建失败
+  QUOTATION_CREATE_ERROR = 'B0201', // 语录传创建失败
+  QUOTATION_GET_ERROR = 'B0202', // 语录获取失败
 }

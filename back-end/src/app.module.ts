@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import { TagModule } from './tag/tag.module';
 import { TypeModule } from './type/type.module';
 import { CommentModule } from './comment/comment.module';
+import { QuotationModule } from './quotation/quotation.module';
 
 @Module({
   imports: [
@@ -15,9 +16,11 @@ import { CommentModule } from './comment/comment.module';
     TagModule,
     TypeModule,
     CommentModule,
+    QuotationModule,
     MongooseModule.forRoot('mongodb://localhost:27017/blog', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useCreateIndex: true,
     }),
   ],
   controllers: [AppController],
