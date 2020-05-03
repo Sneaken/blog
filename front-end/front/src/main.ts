@@ -6,7 +6,7 @@ import 'normalize.css';
 import '@/assets/css/base.less';
 import 'antd-iconfont/iconfont.css';
 import '@/assets/css/animation-effects.less';
-import '@/api/animationEffects';
+import '@/utils/animationEffects';
 
 Vue.config.productionTip = false;
 
