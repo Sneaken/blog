@@ -10,8 +10,10 @@ import '@/api/animationEffects';
 
 Vue.config.productionTip = false;
 
-new Vue({
-  router,
-  store,
-  render: h => h(App),
-}).$mount('#app');
+store.dispatch('init').then(() => {
+  new Vue({
+    router,
+    store,
+    render: h => h(App),
+  }).$mount('#app');
+});

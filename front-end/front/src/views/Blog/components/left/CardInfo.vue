@@ -107,6 +107,9 @@ export default class CardInfo extends Vue {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  &:not(:last-child) {
+    margin-bottom: 5px;
+  }
   .level-item {
     display: inline-block;
     margin: 0 20px;
@@ -124,6 +127,9 @@ export default class CardInfo extends Vue {
   .level {
     .level-item {
       margin: 0 20px;
+    }
+    &:not(:last-child) {
+      margin-bottom: 5px;
     }
     .level-item-number {
       font-size: 50px;

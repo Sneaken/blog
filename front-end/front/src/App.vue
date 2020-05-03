@@ -4,6 +4,12 @@
   </div>
 </template>
 
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+
+@Component
+export default class App extends Vue {}
+</script>
 <style lang="less">
 #app {
   font-family: 'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial,
