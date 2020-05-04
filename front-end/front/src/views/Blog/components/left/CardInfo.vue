@@ -57,7 +57,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import Card from '@/components/Card.vue';
 import SkIcon from '@/components/SkIcon.vue';
 import SkA from '@/components/SkA.vue';
-import { getQuotation } from '@/api/blogIndex';
+import { getQuotation } from '@/api/blog-index';
 
 @Component({
   components: { SkA, SkIcon, Card },

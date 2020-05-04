@@ -3,9 +3,9 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import 'normalize.css';
-import '@/assets/css/base.less';
+import '@/assets/styles/less/common.less';
 import 'antd-iconfont/iconfont.css';
-import '@/assets/css/animation-effects.less';
+import '@/assets/styles/less/animation-effects.less';
 import '@/utils/animationEffects';
 
 Vue.config.productionTip = false;

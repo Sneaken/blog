@@ -1,6 +1,6 @@
 import Fingerprint from 'fingerprintjs2';
 import { createRandomString } from '@/utils/other';
-import { getCookie, setCookie } from '@/utils/cookieManager';
+import { getCookie, setCookie } from '@/utils/cookie-manager';
 
 export async function initUID() {
   let userID!: string;

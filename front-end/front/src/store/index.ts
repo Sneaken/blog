@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { initUID } from '@/utils/uidManager';
+import { initUID } from '@/utils/uid-manager';
 
 Vue.use(Vuex);
 
