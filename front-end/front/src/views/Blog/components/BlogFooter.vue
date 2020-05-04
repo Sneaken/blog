@@ -8,7 +8,7 @@
       </p>
       <p>❤️本站自 {{ startTimeString }} 已运行 {{ runTime }}！❤️</p>
       <p class="no-margin" v-show="views">
-        ❤️感谢 {{ persons }} 小伙伴的 {{ views }} 次光临！❤️
+        ❤️感谢 {{ persons }} 位小伙伴的 {{ views }} 次光临！❤️
       </p>
     </div>
   </footer>

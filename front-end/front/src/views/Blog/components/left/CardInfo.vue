@@ -77,7 +77,7 @@ export default class CardInfo extends Vue {
     try {
       this.quotation = await getQuotation();
     } catch (e) {
-      console.error(e);
+      console.error(e.message);
     }
   }
 }
