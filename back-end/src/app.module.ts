@@ -8,6 +8,8 @@ import { TagModule } from './tag/tag.module';
 import { TypeModule } from './type/type.module';
 import { CommentModule } from './comment/comment.module';
 import { QuotationModule } from './quotation/quotation.module';
+import { ReportController } from './report/controllers/report.controller';
+import { ReportModule } from './report/report.module';
 
 @Module({
   imports: [
@@ -17,6 +19,7 @@ import { QuotationModule } from './quotation/quotation.module';
     TypeModule,
     CommentModule,
     QuotationModule,
+    ReportModule,
     MongooseModule.forRoot('mongodb://localhost:27017/blog', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
