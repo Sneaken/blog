@@ -13,11 +13,15 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateBlogDto, UpdateBlogDto } from '../dto/blog.dto';
 import { ApiErrorCode } from '../../common/enums/api-error-code.enum';
 import { ApiException } from '../../common/exceptions/api.exception';
+import { ReportService } from '../../report/service/report.service';
 
 @Controller('blog')
 @ApiTags('文章相关')
 export class BlogController {
-  constructor(private readonly blogService: BlogService) {}
+  constructor(
+    private readonly blogService: BlogService,
+    private readonly reportService: ReportService,
+  ) {}
 
   @Get('info')
   @ApiOperation({ summary: '获取全部分类和标签' })
@@ -37,6 +41,20 @@ export class BlogController {
   @ApiOperation({ summary: '显示博客列表' })
   async getArticleList() {
     return await this.blogService.list();
+  }
+
+  @Get('visits')
+  @ApiOperation({ summary: '统计访问量' })
+  async statisticsVisits() {
+    const result = await this.reportService.handleVisits();
+    if (result.code !== ApiErrorCode.SUCCESS) {
+      throw new ApiException(
+        result.message,
+        result.code,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+    return result;
   }
 
   @Get(':id')

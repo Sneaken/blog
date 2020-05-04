@@ -7,7 +7,7 @@
         方便网友与自己学习交流，如有侵权，请留言，立即处理]
       </p>
       <p>❤️本站自 {{ startTimeString }} 已运行 {{ runTime }}！❤️</p>
-      <p class="no-margin">
+      <p class="no-margin" v-show="views">
         ❤️感谢 {{ persons }} 小伙伴的 {{ views }} 次光临！❤️
       </p>
     </div>
@@ -17,12 +17,13 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { time2day } from '@/utils/time';
+import { getVisits } from '@/api/blog-index';
 
 @Component
 export default class BlogFooter extends Vue {
   private startTime: Date = new Date('2020-04-27 14:10:00');
-  private persons = 1;
-  private views = 1;
+  private persons = 0;
+  private views = 0;
   private time = {
     days: 0,
     hours: 0,
@@ -54,8 +55,19 @@ export default class BlogFooter extends Vue {
     this.$once('hook:beforeDestroy', () => {
       clearInterval(timer);
     });
+    this.getVisits();
   }
-
+  private async getVisits() {
+    try {
+      const result = await getVisits();
+      this.persons = result.visitors;
+      this.views = result.views;
+    } catch (e) {
+      this.persons = 0;
+      this.views = 0;
+      console.log(e);
+    }
+  }
   private calcTime() {
     const difference = Date.now() - this.startTime.getTime();
     this.time.days = (difference / 24 / 3600 / 1000) | 0;
