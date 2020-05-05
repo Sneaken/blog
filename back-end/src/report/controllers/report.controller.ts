@@ -12,6 +12,8 @@ import { ReportService } from '../service/report.service';
 import { CreateReportDto } from '../dto/report.dto';
 import { ApiErrorCode } from '../../common/enums/api-error-code.enum';
 import { ApiException } from '../../common/exceptions/api.exception';
+import { UserIdPipe } from '../pipes/user-id.pipe';
+import { ActionTypePipe } from '../pipes/action-type.pipe';
 
 @Controller('report')
 @ApiTags('上报统计')
@@ -21,17 +23,12 @@ export class ReportController {
   @Get(':actionType')
   @ApiOperation({ summary: '处理上报' })
   async handleViews(
-    @Param('actionType') actionType: string,
-    @Query('userID') userID: string,
+    @Param('actionType', new ActionTypePipe()) actionType: number,
+    @Query('userID', new UserIdPipe()) userID: string,
     @Ip() ipv4: string,
     @Headers('user-agent') ua: string,
   ) {
-    const createReportDto = new CreateReportDto(
-      userID,
-      ipv4,
-      ua,
-      Number(actionType),
-    );
+    const createReportDto = new CreateReportDto(userID, ipv4, ua, actionType);
     const result = await this.reportService.create(createReportDto);
     if (result.code !== ApiErrorCode.SUCCESS) {
       throw new ApiException(
@@ -40,6 +37,5 @@ export class ReportController {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
-    return result;
   }
 }

@@ -10,5 +10,7 @@ export enum ApiErrorCode {
   QUOTATION_CREATE_ERROR = 'B0201', // 语录传创建失败
   QUOTATION_GET_ERROR = 'B0202', // 语录获取失败
 
-  REPORT_CREATE_ERROR = 'C0101', // 上报失败
+  REPORT_CREATE_ERROR = 'C0100', // 上报失败
+  REPORT_ACTION_TYPE_INVALID = 'C0101', // 行为无效
+  REPORT_USER_ID_INVALID = 'C0102', // 用户ID无效
 }

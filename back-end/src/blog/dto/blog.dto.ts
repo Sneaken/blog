@@ -1,10 +1,13 @@
 // dto 数据持久类
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty } from 'class-validator';
 
 export class CreateBlogDto {
   @ApiProperty({ description: '博客标题', example: 'nest.js 第一课' })
+  @IsNotEmpty({ message: '博客标题不能为空' })
   title: string;
   @ApiProperty({ description: '博客内容', example: 'nest new blog' })
+  @IsNotEmpty({ message: '博客内容不能为空' })
   content: string;
   @ApiProperty({ description: '分类', example: ['javascript', 'node.js'] })
   type: string[];
