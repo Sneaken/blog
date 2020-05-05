@@ -10,5 +10,6 @@ import { ReportSchema } from './schemas/report.schema';
   ],
   controllers: [ReportController],
   providers: [ReportService],
+  exports: [ReportService],
 })
 export class ReportModule {}
