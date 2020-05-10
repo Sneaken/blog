@@ -4,6 +4,7 @@
       tabindex="-1"
       ref="sk-image-viewer__wrapper"
       class="sk-image-viewer__wrapper"
+      v-if="isShow"
       :style="{ 'z-index': zIndex }"
     >
       <div class="sk-image-viewer__mask"></div>
@@ -113,6 +114,8 @@ export default class SkImageViewer extends Vue {
   private readonly onClose!: () => {};
   @Prop({ type: Number, default: 0 })
   private readonly initialIndex!: number;
+  @Prop({ type: Boolean, default: false })
+  private readonly isShow!: boolean;
 
   private index = this.initialIndex;
   private infinite = true;
@@ -170,12 +173,15 @@ export default class SkImageViewer extends Vue {
       }
     });
   }
-
-  mounted() {
-    this.deviceSupportInstall();
+  @Watch('isShow')
+  async isShowChange(val: boolean) {
     // add tabindex then wrapper can be focusable via Javascript
     // focus wrapper so arrow key can't cause inner scroll behavior underneath
-    (this.$refs['sk-image-viewer__wrapper'] as HTMLDivElement).focus();
+    await this.$nextTick();
+    if (val) {
+      this.deviceSupportInstall();
+      (this.$refs['sk-image-viewer__wrapper'] as HTMLDivElement).focus();
+    }
   }
 
   hide() {
@@ -441,8 +447,7 @@ export default class SkImageViewer extends Vue {
     opacity: 0.5;
   }
   .viewer-fade-enter-active {
-    /* FIXME 进入动画不生效 */
-    animation: viewer-fade-in 0.9s;
+    animation: viewer-fade-in 0.3s;
   }
   .viewer-fade-leave-active {
     animation: viewer-fade-out 0.3s;

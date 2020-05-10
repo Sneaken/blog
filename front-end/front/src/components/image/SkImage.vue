@@ -23,7 +23,7 @@
       <sk-image-viewer
         :z-index="zIndex"
         :initial-index="imageIndex"
-        v-if="showViewer"
+        :is-show="showViewer"
         :on-close="closeViewer"
         :url-list="previewSrcList"
       />
