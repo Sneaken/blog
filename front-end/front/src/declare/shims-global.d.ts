@@ -4,6 +4,7 @@ export {}; // 此行没啥什么实际意义 只是为了取消报错。
 declare global {
   interface Window {
     WXEnvironment: any; // 微信环境
+    useConsole: boolean; // 控制线上能否使用console打印
   }
   interface Document {
     documentMode?: number; // ie 存在此值
