@@ -10,3 +10,7 @@ export function createRandomString(min: number, max?: number): string {
   }
   return returnStr;
 }
+
+export const dfn = () => {};
+
+export const dar = () => [];

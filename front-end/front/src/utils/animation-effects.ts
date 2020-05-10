@@ -25,9 +25,11 @@
       eleText.addEventListener('animationend', function() {
         eleText.parentNode!.removeChild(eleText);
       });
+      const clientWidth = eleText.clientWidth / 2;
+      const clientHeight = eleText.clientHeight;
       // 位置
-      eleText.style.left = x - eleText.clientWidth / 2 + 'px';
-      eleText.style.top = y - eleText.clientHeight + 'px';
+      eleText.style.left = x - clientWidth + 'px';
+      eleText.style.top = y - clientHeight + 'px';
       // index递增
       index++;
     });

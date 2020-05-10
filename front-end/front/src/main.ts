@@ -8,7 +8,9 @@ import 'antd-iconfont/iconfont.css';
 import '@/assets/styles/less/animation-effects.less';
 import '@/utils/animation-effects.ts';
 import Vconsole from 'vconsole';
-if (process.env.NODE_ENV === 'development') {
+import { isMobile } from '@/utils/util';
+
+if (process.env.NODE_ENV === 'development' && isMobile()) {
   new Vconsole();
 }
 Vue.config.productionTip = false;

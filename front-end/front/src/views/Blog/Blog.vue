@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+  <div>
     <blog-banner />
     <div class="blog-container">
       <div class="blog-container-center">
@@ -34,7 +34,6 @@ export default class Blog extends Vue {}
 <style lang="less" scoped>
 @leftWidth: 20vw;
 @rightWidth: 35vw;
-@mainHeight: 300px;
 .blog-container {
   overflow: hidden;
 }
@@ -45,7 +44,6 @@ export default class Blog extends Vue {}
 .blog-container-center .blog-main {
   margin-left: @leftWidth;
   margin-right: @rightWidth;
-  height: @mainHeight;
   /*background-color: #94e8ff;*/
 }
 .blog-aside-left {

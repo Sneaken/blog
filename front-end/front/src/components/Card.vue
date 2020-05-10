@@ -18,11 +18,11 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class Card extends Vue {
   @Prop({ type: Object })
-  private header?: {};
+  private readonly header?: {};
   @Prop({ type: Object })
-  private bodyStyle?: {};
+  private readonly bodyStyle?: {};
   @Prop({ type: String, default: 'never' })
-  private shadow?: 'always' | 'hover' | 'never';
+  private readonly shadow?: 'always' | 'hover' | 'never';
 }
 </script>
 
@@ -34,6 +34,7 @@ export default class Card extends Vue {
   overflow: hidden;
   color: #303133;
   background-color: #fff;
+  cursor: default;
   &:hover {
     border: 1px solid @bgc;
     background-color: @bgc;
