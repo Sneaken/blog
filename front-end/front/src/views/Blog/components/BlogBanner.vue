@@ -16,8 +16,8 @@ export default class BlogBanner extends Vue {}
 <style lang="less" scoped>
 .blog-banner {
   height: 60vh;
-  background: url('http://q8m49i3f9.bkt.clouddn.com/bg.jpg') no-repeat fixed
-    center center;
+  background: url('http://images.jasonpang.top/bg.jpg') no-repeat fixed center
+    center;
   background-size: cover;
 }
 </style>
