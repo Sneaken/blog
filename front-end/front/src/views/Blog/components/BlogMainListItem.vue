@@ -54,13 +54,20 @@ export default class BlogMainListItem extends Vue {
 </script>
 
 <style lang="less" scoped>
-.middle {
-  vertical-align: middle;
-}
 @media (min-width: 900px) {
+  .middle {
+    display: inline-flex;
+    align-items: center;
+    &:not(:last-child) {
+      margin-right: 8px;
+    }
+  }
+  .sk-icon {
+    padding-right: 2px;
+  }
   .list-item {
     border: 1px solid #ebeef5;
-    border-radius: 4px;
+    border-radius: 8px;
   }
   .list-item-top {
     margin: 10px;
