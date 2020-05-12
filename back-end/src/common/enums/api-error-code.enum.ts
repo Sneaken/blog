@@ -7,10 +7,29 @@ export enum ApiErrorCode {
   USER_NO_EXIST = 'A0201', // 用户不存在
   BLOG_INFO_ERROR = 'B0100', // 查询博客分类标签出错
   BLOG_CREATE_ERROR = 'B0101', // 博客创建失败
+  BLOG_LIST_GET_ERROR = 'B0101', // 博客列表获取失败
   QUOTATION_CREATE_ERROR = 'B0201', // 语录传创建失败
   QUOTATION_GET_ERROR = 'B0202', // 语录获取失败
 
   REPORT_CREATE_ERROR = 'C0100', // 上报失败
   REPORT_ACTION_TYPE_INVALID = 'C0101', // 行为无效
   REPORT_USER_ID_INVALID = 'C0102', // 用户ID无效
+}
+
+export enum ApiErrorMessage {
+  TIMEOUT = '系统繁忙',
+  SUCCESS = '请求成功',
+  USER_PHONE_EXIST = '手机号已存在',
+  USER_EMAIL_EXIST = '邮箱已存在',
+  USER_LOGIN_INVALID = '用户登陆失败',
+  USER_NO_EXIST = '用户不存在',
+  BLOG_INFO_ERROR = '查询博客分类标签出错',
+  BLOG_CREATE_ERROR = '博客创建失败',
+  BLOG_LIST_GET_ERROR = '博客列表获取失败',
+  QUOTATION_CREATE_ERROR = '语录传创建失败',
+  QUOTATION_GET_ERROR = '语录获取失败',
+
+  REPORT_CREATE_ERROR = '上报失败',
+  REPORT_ACTION_TYPE_INVALID = '行为无效',
+  REPORT_USER_ID_INVALID = '用户ID无效',
 }

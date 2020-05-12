@@ -22,3 +22,12 @@ export async function getVisits(): Promise<Visit> {
   const { data } = await axios.get<VisitsResponse>(url);
   return data.data;
 }
+
+/**
+ * 获取博文列表
+ */
+export async function blogList() {
+  const url = 'http://127.0.0.1:3000/blog/list';
+  const { data } = await axios.get<BlogListResponse>(url, { params: {} });
+  return data.data;
+}

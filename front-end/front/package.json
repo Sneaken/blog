@@ -11,6 +11,8 @@
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "fingerprintjs2": "^2.1.0",
+    "highlight.js": "^10.0.2",
+    "markdown-it": "^10.0.0",
     "normalize.css": "^8.0.1",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
@@ -20,6 +22,9 @@
   },
   "devDependencies": {
     "@types/fingerprintjs2": "^2.0.0",
+    "@types/highlight.js": "^9.12.3",
+    "@types/markdown-it": "^10.0.1",
+    "@types/punycode": "^2.1.0",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
     "@vue/cli-plugin-babel": "~4.3.0",

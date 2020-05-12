@@ -31,7 +31,7 @@ export class BlogController {
       throw new ApiException(
         result.message,
         result.code,
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        HttpStatus.BAD_REQUEST,
       );
     }
     return result;
@@ -40,7 +40,15 @@ export class BlogController {
   @Get('list')
   @ApiOperation({ summary: '显示博客列表' })
   async getArticleList() {
-    return await this.blogService.list();
+    const result = await this.blogService.list();
+    if (result.code !== ApiErrorCode.SUCCESS) {
+      throw new ApiException(
+        result.message,
+        result.code,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return result;
   }
 
   @Get('visits')
@@ -51,7 +59,7 @@ export class BlogController {
       throw new ApiException(
         result.message,
         result.code,
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        HttpStatus.BAD_REQUEST,
       );
     }
     return result;
@@ -93,7 +101,7 @@ export class BlogController {
       throw new ApiException(
         result.message,
         result.code,
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        HttpStatus.BAD_REQUEST,
       );
     }
   }

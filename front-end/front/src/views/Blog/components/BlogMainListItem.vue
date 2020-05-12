@@ -2,7 +2,7 @@
   <div class="list-item">
     <div class="list-item-top">
       <div>
-        <span class="middle">
+        <span class="middle" v-if="releaseTime">
           <i class="el-icon-date" />
           {{ releaseTime }}
         </span>
@@ -11,47 +11,83 @@
           {{ comments }}
         </span>
         <span class="middle">
-          <i class="el-icon-time" />
-          {{ estimatedReadingTime }} 分钟
+          <i class="el-icon-time" /> {{ estimatedReadingTime }}分钟
         </span>
         <span class="middle">
           <i class="el-icon-edit" />
           {{ totalText }} K
         </span>
       </div>
-      <h3>{{ title }}</h3>
-      <p>{{ contentPreview }}</p>
-      <sk-tag v-for="tag in tags" :text="tag" :key="tag"> {{ tag }}</sk-tag>
+      <h3 class="list-item-top-title">{{ data.title }}</h3>
+      <div v-html="content" />
+      <sk-tag v-for="tag in data.tags" :key="tag"> {{ tag }}</sk-tag>
     </div>
     <div class="list-item-bottom">
       <sk-button size="small" type="primary"
         >阅读更多 <i class="el-icon-arrow-right"
       /></sk-button>
-      <div>最后修改时间：{{ lastModified }}</div>
+      <div v-if="lastModified">最后修改时间：{{ lastModified }}</div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 import SkTag from '@/components/tag/SkTag.vue';
 import SkButton from '@/components/button/SkButton.vue';
+import MarkdownIt from 'markdown-it/lib';
+import hljs from 'highlight.js';
+
+const md: MarkdownIt = new MarkdownIt({
+  html: true,
+  linkify: true,
+  typographer: true,
+  highlight: function(str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return `<pre class="hljs"><code>${
+          hljs.highlight(lang, str, true).value
+        }</code></pre>`;
+      } catch (__) {
+        console.log(__);
+      }
+    }
+    return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
+  },
+});
+
 @Component({
   components: { SkButton, SkTag },
 })
 export default class BlogMainListItem extends Vue {
-  private releaseTime = '2020-05-09';
+  @Prop({ type: Object, required: true })
+  private readonly data!: BlogListItem;
+
+  private get releaseTime(): string {
+    return this.data.createdAt.split('T').shift() || '';
+  }
+  private get lastModified(): string {
+    return this.data.updatedAt.split('T').shift() || '';
+  }
+
+  private get totalText(): number {
+    return ((this.data.content.length / 1000) * 3) | 0;
+  }
+
+  private get estimatedReadingTime(): number {
+    // 在中文环境下，成人的平均阅读速度为 500 字/分钟。
+    const result = (this.totalText / 500) | 0;
+    if (result === 0) {
+      return 1;
+    }
+    return result;
+  }
+
+  private get content(): string {
+    return md.render(this.data.content);
+  }
+
   private comments = '1';
-  private estimatedReadingTime = '22';
-  private totalText = '1';
-  private title = '源码分享';
-  private contentPreview =
-    '写在前面\n' +
-    '博客源码包括两个主题icarus和next，在主题基础之上参照各网友博客，以及自己的一些想法做出的一些修改以及增加部分新元素。 以下是修改后的需要的部分配置，其余的配置参照icarus主题配置和next主题配置。\n' +
-    '因为修改了原作者源码，有什么问题请先联系我，不要去麻烦原作者了，能自己解决的问题就不要麻烦别人了，每个人的时间都很宝贵。\n' +
-    '膜拜和感谢所有模块的原作者,orz👻,辛苦了。';
-  private tags = ['分类标签1', '分类标签2', '分类标签3', '分类标签4'];
-  private lastModified = '2020-05-15';
 }
 </script>
 
@@ -67,11 +103,20 @@ export default class BlogMainListItem extends Vue {
   .list-item {
     border: 1px solid #ebeef5;
     border-radius: 8px;
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
   }
   .list-item-top {
     margin: 10px;
     border-bottom: 1px solid #298dff;
     padding: 10px;
+  }
+  .list-item-top-title {
+    transition: color 0.3s;
+    &:hover {
+      color: #8cc5ff;
+    }
   }
   .list-item-bottom {
     display: flex;

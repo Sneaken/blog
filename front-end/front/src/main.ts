@@ -3,6 +3,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import 'normalize.css';
+import 'highlight.js/styles/vs2015.css';
 import '@/assets/styles/less/common.less';
 import '@/assets/styles/less/icon.less';
 import '@/assets/styles/less/animation-effects.less';

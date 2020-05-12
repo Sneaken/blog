@@ -1,7 +1,7 @@
 <template>
   <footer class="blog-footer">
     <div>
-      <p class="no-margin">© 2020 Sneaker Powered by Vue</p>
+      <p class="no-margin">© 2020 Sneaker | Use Vue</p>
       <p>
         © 版权说明：[本网站所有内容均收集于互联网或自己创作,
         方便网友与自己学习交流，如有侵权，请留言，立即处理]
