@@ -25,10 +25,7 @@
 
 <script lang="ts">
 import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
-import SkIcon from '@/components/SkIcon.vue';
-@Component({
-  components: { SkIcon },
-})
+@Component
 export default class SkButton extends Vue {
   @Prop({ type: String, default: 'default' })
   private readonly type!: string;

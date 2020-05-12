@@ -3,19 +3,19 @@
     <div class="list-item-top">
       <div>
         <span class="middle">
-          <sk-icon icon="calendar" size="14px" />
+          <i class="el-icon-date" />
           {{ releaseTime }}
         </span>
         <span class="middle">
-          <sk-icon icon="message1" size="14px" />
+          <i class="el-icon-chat-dot-round" />
           {{ comments }}
         </span>
         <span class="middle">
-          <sk-icon icon="clockcircleo" size="14px" />
+          <i class="el-icon-time" />
           {{ estimatedReadingTime }} 分钟
         </span>
         <span class="middle">
-          <sk-icon icon="edit" size="14px" />
+          <i class="el-icon-edit" />
           {{ totalText }} K
         </span>
       </div>
@@ -32,10 +32,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import SkIcon from '@/components/SkIcon.vue';
 import SkTag from '@/components/tag/SkTag.vue';
 @Component({
-  components: { SkTag, SkIcon },
+  components: { SkTag },
 })
 export default class BlogMainListItem extends Vue {
   private releaseTime = '2020-05-09';
@@ -61,9 +60,6 @@ export default class BlogMainListItem extends Vue {
     &:not(:last-child) {
       margin-right: 8px;
     }
-  }
-  .sk-icon {
-    padding-right: 2px;
   }
   .list-item {
     border: 1px solid #ebeef5;

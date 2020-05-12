@@ -4,7 +4,7 @@ import router from './router';
 import store from './store';
 import 'normalize.css';
 import '@/assets/styles/less/common.less';
-import 'antd-iconfont/iconfont.css';
+import '@/assets/styles/less/icon.less';
 import '@/assets/styles/less/animation-effects.less';
 import '@/assets/styles/less/transition.less';
 import '@/utils/animation-effects.ts';

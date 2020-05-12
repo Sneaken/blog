@@ -76,7 +76,7 @@ export default class SkTag extends Vue {
     return this.disableTransitions ? (
       tagEl
     ) : (
-      <transition name="sk-zoom-in-center">{tagEl}</transition>
+      <transition name="el-zoom-in-center">{tagEl}</transition>
     );
   }
 }
