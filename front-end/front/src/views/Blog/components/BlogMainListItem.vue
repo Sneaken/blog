@@ -24,7 +24,9 @@
       <sk-tag v-for="tag in tags" :text="tag" :key="tag"> {{ tag }}</sk-tag>
     </div>
     <div class="list-item-bottom">
-      <div>阅读更多</div>
+      <sk-button size="small" type="primary"
+        >阅读更多 <i class="el-icon-arrow-right"
+      /></sk-button>
       <div>最后修改时间：{{ lastModified }}</div>
     </div>
   </div>
@@ -33,8 +35,9 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import SkTag from '@/components/tag/SkTag.vue';
+import SkButton from '@/components/button/SkButton.vue';
 @Component({
-  components: { SkTag },
+  components: { SkButton, SkTag },
 })
 export default class BlogMainListItem extends Vue {
   private releaseTime = '2020-05-09';
@@ -73,6 +76,7 @@ export default class BlogMainListItem extends Vue {
   .list-item-bottom {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 15px;
   }
 }

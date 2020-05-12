@@ -28,13 +28,19 @@ import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class SkButton extends Vue {
   @Prop({ type: String, default: 'default' })
-  private readonly type!: string;
-  @Prop({ type: Boolean })
-  private readonly size?: boolean;
+  private readonly type!:
+    | 'primary'
+    | 'success'
+    | 'warning'
+    | 'danger'
+    | 'info'
+    | 'text';
+  @Prop({ type: String })
+  private readonly size?: 'medium' | 'small' | 'mini';
   @Prop({ type: String, default: '' })
   private readonly icon!: string;
   @Prop({ type: String, default: 'button' })
-  private readonly nativeType!: string;
+  private readonly nativeType!: 'button' | 'submit' | 'reset';
   @Prop({ type: Boolean })
   private readonly loading?: boolean;
   @Prop({ type: Boolean })
@@ -48,11 +54,11 @@ export default class SkButton extends Vue {
   @Prop({ type: Boolean })
   private readonly circle?: boolean;
 
-  private get buttonSize() {
-    return this.size;
+  private get buttonSize(): string {
+    return this.size || 'small';
   }
-  private get buttonDisabled() {
-    return this.disabled;
+  private get buttonDisabled(): boolean {
+    return this.disabled || false;
   }
 
   @Emit()
