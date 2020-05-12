@@ -4,6 +4,7 @@
     <div class="blog-container">
       <div class="blog-container-center">
         <blog-main class="blog-main" />
+        <sk-back-top />
       </div>
       <blog-aside-left class="blog-aside-left" />
       <blog-aside-right class="blog-aside-right" />
@@ -19,8 +20,11 @@ import BlogFooter from '@/views/Blog/components/BlogFooter.vue';
 import BlogAsideLeft from '@/views/Blog/components/BlogAsideLeft.vue';
 import BlogAsideRight from '@/views/Blog/components/BlogAsideRight.vue';
 import BlogMain from '@/views/Blog/components/BlogMain.vue';
+import SkBackTop from '@/components/SkBackTop.vue';
+
 @Component({
   components: {
+    SkBackTop,
     BlogMain,
     BlogAsideRight,
     BlogAsideLeft,

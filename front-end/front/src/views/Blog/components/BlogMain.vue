@@ -7,6 +7,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import BlogMainListItem from '@/views/Blog/components/BlogMainListItem.vue';
+
 @Component({
   components: { BlogMainListItem },
 })
