@@ -3,7 +3,8 @@ import Vconsole from 'vconsole';
 import { isMobile } from '@/utils/util';
 
 const isDev = process.env.NODE_ENV === 'development';
-
+/*eslint no-global-assign: "error"*/
+/*globals console:true*/
 let _useConsole = isDev;
 const forkConsole = console;
 const nullConsole = {
