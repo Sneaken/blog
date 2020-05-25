@@ -163,6 +163,7 @@ export class BlogService {
             ...queryList,
           },
         },
+        { $sort: { updatedAt: -1 } },
         { $skip: ((query.currentPage ?? 1) - 1) * 10 },
         { $limit: 10 },
         { $project: { frontCover: 0, __v: 0 } },
