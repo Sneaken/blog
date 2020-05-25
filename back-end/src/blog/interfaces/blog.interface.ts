@@ -10,6 +10,6 @@ export interface Blog extends Document {
   copyrightOn: boolean; // 版权开启
   commentable: boolean; // 评论开启
   published: boolean; // 发布
-  createAt: Date; // 创建时间
-  updateAt: Date; // 更新时间
+  createdAt: Date; // 创建时间
+  updatedAt: Date; // 更新时间
 }

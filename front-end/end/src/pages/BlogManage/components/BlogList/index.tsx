@@ -39,7 +39,7 @@ interface TableData {
   visible: boolean;
 }
 export interface IDataSource {
-  tableData: TableData[] | any[];
+  tableData: TableData[];
   tableColumn: {
     title: string;
     type: string;

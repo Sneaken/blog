@@ -172,7 +172,7 @@ export class BlogService {
       return {
         code: ApiErrorCode.SUCCESS,
         data: {
-          total: total[0].count,
+          total: total[0]?.count ?? 0,
           currentPage: query.currentPage,
           list,
         },

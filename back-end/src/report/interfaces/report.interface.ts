@@ -4,5 +4,5 @@ export interface Report extends Document {
   ipv4: string;
   ua: string;
   actionType: number;
-  createAt: Date;
+  createdAt: Date;
 }
