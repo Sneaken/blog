@@ -15,6 +15,7 @@ import {
   Tag,
   Message,
   Field,
+  Balloon,
 } from '@alifd/next';
 
 import { useRequest } from 'ice';
@@ -35,6 +36,7 @@ interface TableData {
   updatedAt: string;
   views: number;
   _id: string;
+  visible: boolean;
 }
 export interface IDataSource {
   tableData: TableData[];
@@ -78,13 +80,19 @@ const BlogList: React.FunctionComponent<ITableListProps> = (
     method: 'get',
   });
 
-  const onSelect = (value, error) => {
+  const onSelect = value => {
     // 表单提交用 Form.Submit组件 支持 回车提交 监听 onClick (value,error,field)
     request({
       params: value,
     })
       .then(res => {
-        setTableData(res.data);
+        const result = res.data.map(item => {
+          return {
+            ...item,
+            visible: false,
+          };
+        });
+        setTableData(result);
       })
       .catch(e => {
         console.log(e);
@@ -108,13 +116,18 @@ const BlogList: React.FunctionComponent<ITableListProps> = (
     method: 'DELETE',
   });
 
-  const handleDelete = (e, index) => {
+  const handleBalloonVisible = (index, show) => {
+    const result = [...tableData];
+    result[index].visible = show;
+    setTableData(result);
+  };
+  const handleDelete = index => {
     deleteRequest({
       // eslint-disable-next-line no-underscore-dangle
       url: `http://127.0.0.1:3000/blog/${tableData[index]._id}`,
     })
       .then(() => {
-        onSelect(field.getValues(), null);
+        onSelect(field.getValues());
         Message.success('删除成功');
       })
       .catch(e => {
@@ -168,30 +181,38 @@ const BlogList: React.FunctionComponent<ITableListProps> = (
               </FormItem>
               {expand && (
                 <>
-                  <FormItem colSpan={3} label="分类">
-                    <Select placeholder="选择分类" name="type" hasClear>
-                      <Option value="1">发布</Option>
-                      <Option value="0">未发布</Option>
-                    </Select>
-                  </FormItem>
-                  <FormItem colSpan={3} label="标签">
-                    <Select placeholder="选择标签" name="tags" hasClear>
-                      <Option value="1">发布</Option>
-                      <Option value="0">未发布</Option>
-                    </Select>
-                  </FormItem>
-                  {/* <FormItem colSpan={3} label="赏赞情况"> */}
-                  {/*  <Select placeholder="选择是否开启赏赞情况"> */}
-                  {/*    <Option value="true">开启</Option> */}
-                  {/*    <Option value="false">关闭</Option> */}
+                  {/* <FormItem colSpan={3} label="分类"> */}
+                  {/*  <Select placeholder="选择分类" name="type" hasClear> */}
+                  {/*    <Option value="1">发布</Option> */}
+                  {/*    <Option value="0">未发布</Option> */}
                   {/*  </Select> */}
                   {/* </FormItem> */}
-                  {/* <FormItem colSpan={3} label="评论情况"> */}
-                  {/*  <Select placeholder="选择是否开启评论情况"> */}
-                  {/*    <Option value="small">开启</Option> */}
-                  {/*    <Option value="medium">关闭</Option> */}
+                  {/* <FormItem colSpan={3} label="标签"> */}
+                  {/*  <Select placeholder="选择标签" name="tags" hasClear> */}
+                  {/*    <Option value="1">发布</Option> */}
+                  {/*    <Option value="0">未发布</Option> */}
                   {/*  </Select> */}
                   {/* </FormItem> */}
+                  <FormItem colSpan={3} label="赏赞情况">
+                    <Select
+                      name="rewardsOpen"
+                      placeholder="选择是否开启赏赞情况"
+                      hasClear
+                    >
+                      <Option value="1">开启</Option>
+                      <Option value="0">关闭</Option>
+                    </Select>
+                  </FormItem>
+                  <FormItem colSpan={3} label="评论情况">
+                    <Select
+                      name="commentable"
+                      placeholder="选择是否开启评论情况"
+                      hasClear
+                    >
+                      <Option value="1">开启</Option>
+                      <Option value="0">关闭</Option>
+                    </Select>
+                  </FormItem>
                 </>
               )}
               <Cell colSpan={3} className={styles.btns}>
@@ -204,7 +225,7 @@ const BlogList: React.FunctionComponent<ITableListProps> = (
                   <Form.Submit
                     htmlType="submit"
                     type="primary"
-                    onClick={(value, error) => onSelect(value, error)}
+                    onClick={value => onSelect(value)}
                   >
                     查询
                   </Form.Submit>
@@ -269,15 +290,39 @@ const BlogList: React.FunctionComponent<ITableListProps> = (
                       >
                         编辑
                       </Button>
-                      <Button
-                        type="primary"
-                        text
-                        onClick={e => {
-                          handleDelete(e, index);
+                      <Balloon
+                        visible={tableData[index].visible}
+                        trigger={
+                          <Button
+                            size="small"
+                            style={{ color: '#e72b00' }}
+                            text
+                            onClick={() => {
+                              handleBalloonVisible(index, true);
+                            }}
+                          >
+                            删除
+                          </Button>
+                        }
+                        onClose={() => {
+                          handleBalloonVisible(index, false);
                         }}
+                        align="bl"
+                        triggerType="click"
                       >
-                        删除
-                      </Button>
+                        <div className={styles.Balloon}>
+                          是否删除？
+                          <Button
+                            type="primary"
+                            size="small"
+                            onClick={() => {
+                              handleDelete(index);
+                            }}
+                          >
+                            是
+                          </Button>
+                        </div>
+                      </Balloon>
                     </div>
                   )}
                 />

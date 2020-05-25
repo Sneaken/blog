@@ -144,14 +144,8 @@ export class BlogService {
           ...queryList,
         },
         {
-          _id: 1,
-          title: 1,
-          type: 1,
-          tags: 1,
-          views: 1,
-          published: 1,
-          updatedAt: 1,
-          createdAt: 1,
+          frontCover: 0,
+          __v: 0,
         },
       );
       return {
