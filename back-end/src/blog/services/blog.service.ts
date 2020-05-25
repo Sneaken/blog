@@ -134,26 +134,50 @@ export class BlogService {
     try {
       const queryList = {};
       Object.keys(query).forEach(key => {
+        if (key === 'currentPage') return;
         if (key !== 'title') {
-          queryList[key] = query[key] || 0;
+          if (query[key] === '1') {
+            queryList[key] = true;
+          } else if (query[key] === '0') {
+            queryList[key] = false;
+          } else {
+            queryList[key] = query[key] || 0;
+          }
         }
       });
-      const list = await this.blogModel.find(
+      const promise1 = this.blogModel.aggregate([
         {
-          title: { $regex: query?.title?.trim() ?? '', $options: '$i' },
-          ...queryList,
+          $match: {
+            title: { $regex: query?.title?.trim() ?? '', $options: '$i' }, // 忽略大小写
+            ...queryList,
+          },
         },
         {
-          frontCover: 0,
-          __v: 0,
+          $count: 'count',
         },
-      );
+      ]);
+      const promise2 = this.blogModel.aggregate([
+        {
+          $match: {
+            title: { $regex: query?.title?.trim() ?? '', $options: '$i' }, // 忽略大小写
+            ...queryList,
+          },
+        },
+        { $skip: ((query.currentPage ?? 1) - 1) * 10 },
+        { $limit: 10 },
+        { $project: { frontCover: 0, __v: 0 } },
+      ]);
+      const total = await promise1;
+      const list = await promise2;
       return {
         code: ApiErrorCode.SUCCESS,
-        data: list,
+        data: {
+          total: total[0].count,
+          currentPage: query.currentPage,
+          list,
+        },
       };
     } catch (e) {
-      console.log(e);
       return {
         code: ApiErrorCode.BLOG_LIST_QUERY_BY_CONDITION_ERROR,
         message: ApiErrorMessage.BLOG_LIST_QUERY_BY_CONDITION_ERROR,

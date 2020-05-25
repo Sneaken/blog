@@ -20,7 +20,8 @@ export class ListConditionPipe implements PipeTransform {
       (value.rewardsOpen && !this.onOrOff(value.rewardsOpen)) ||
       (value.copyrightOn && !this.onOrOff(value.copyrightOn)) ||
       (value.commentable && !this.onOrOff(value.commentable)) ||
-      (value.published && !this.onOrOff(value.published))
+      (value.published && !this.onOrOff(value.published)) ||
+      (value.currentPage && !/^\d+$/.test(value.currentPage))
     ) {
       throw new ApiException(
         ApiErrorMessage.BLOG_LIST_QUERY_BY_CONDITION_ERROR + '2',
@@ -40,6 +41,7 @@ export class ListConditionPipe implements PipeTransform {
       'copyrightOn',
       'commentable',
       'published',
+      'currentPage',
     ];
     Object.keys(value).forEach(item => {
       if (result) return;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   Table,
@@ -39,7 +39,7 @@ interface TableData {
   visible: boolean;
 }
 export interface IDataSource {
-  tableData: TableData[];
+  tableData: TableData[] | any[];
   tableColumn: {
     title: string;
     type: string;
@@ -68,6 +68,8 @@ const BlogList: React.FunctionComponent<ITableListProps> = (
 ): JSX.Element => {
   const { dataSource = DEFAULT_PROPS } = props;
   const [tableData, setTableData] = useState(dataSource.tableData);
+  const [total, setTotal] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const history = useHistory();
 
   // 展开更多
@@ -83,24 +85,29 @@ const BlogList: React.FunctionComponent<ITableListProps> = (
   const onSelect = value => {
     // 表单提交用 Form.Submit组件 支持 回车提交 监听 onClick (value,error,field)
     request({
-      params: value,
+      params: { ...value, currentPage },
     })
       .then(res => {
-        const result = res.data.map(item => {
-          return {
-            ...item,
-            visible: false,
-          };
-        });
+        const result =
+          res.data.list.length > 0
+            ? res.data.list.map(item => ({
+                ...item,
+                visible: false,
+              }))
+            : res.data.list;
         setTableData(result);
+        setTotal(res.data.total);
       })
       .catch(e => {
         console.log(e);
       });
   };
 
+  useEffect(() => {
+    onSelect(field.getValues());
+  }, [currentPage]);
   const onPaginationChange = value => {
-    console.log(value);
+    setCurrentPage(value);
   };
 
   const toggleSearchList = () => {
@@ -334,12 +341,12 @@ const BlogList: React.FunctionComponent<ITableListProps> = (
                 justify="space-between"
               >
                 <div className={styles.total}>
-                  共<span>{tableData.length}</span>条博客
+                  共<span>{total}</span>条博客
                 </div>
                 <Pagination
-                  defaultCurrent={1}
+                  current={currentPage}
                   onChange={onPaginationChange}
-                  total={tableData.length}
+                  total={total}
                   hideOnlyOnePage
                 />
               </Box>
