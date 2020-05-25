@@ -108,8 +108,8 @@ export default class BlogFooter extends Vue {
   line-height: normal;
 
   color: #e2dcdc;
-  background: url('http://images.jasonpang.top/bg.jpg') no-repeat fixed
-    center center;
+  background: url('http://images.jasonpang.top/bg.jpg') no-repeat fixed center
+    center;
   background-size: cover;
 
   .no-margin {

@@ -14,15 +14,17 @@ import {
   Switch,
   Field,
   Message,
+  Loading,
 } from '@alifd/next';
 import { findDOMNode } from 'react-dom';
-import { useRequest } from 'ice';
+import { useRequest, useParams } from 'ice';
 import styles from './index.module.scss';
 
 const { Tooltip } = Balloon;
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
 const WriteBlock: React.FunctionComponent = (): JSX.Element => {
+  const { id } = useParams();
   const [content, setContent] = useState('');
   const containerRef = useRef(null);
   const [left, setLeft] = useState(0);
@@ -31,9 +33,21 @@ const WriteBlock: React.FunctionComponent = (): JSX.Element => {
     type: [],
     tags: [],
   });
-
+  const contentField = Field.useField({ values: {} });
+  const settingField = Field.useField({
+    values: {
+      rewardsOpen: false,
+      copyrightOn: false,
+      commentable: false,
+      published: false,
+    },
+  });
   const { request: typeRequest } = useRequest({
     url: 'http://127.0.0.1:3000/blog/info',
+    method: 'GET',
+  });
+  const { request: infoRequest, loading } = useRequest({
+    url: `http://127.0.0.1:3000/blog/${id}`,
     method: 'GET',
   });
   useEffect(() => {
@@ -49,8 +63,23 @@ const WriteBlock: React.FunctionComponent = (): JSX.Element => {
         setDataSource(data);
       })
       .catch(e => {
-        console.log('%ce =>', 'color:red;font-size:20px;', e.response.data);
+        console.log(e);
       });
+    if (id) {
+      infoRequest()
+        .then(({ data }) => {
+          setContent(data.content);
+          settingField.setValue('title', data.title);
+          settingField.setValue('type', data.type);
+          settingField.setValue('tags', data.tags);
+          settingField.setValue('rewardsOpen', data.rewardsOpen);
+          settingField.setValue('copyrightOn', data.copyrightOn);
+          settingField.setValue('published', data.published);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const maxTagPlaceholder = (selectedValues, totalValues) => {
@@ -63,18 +92,13 @@ const WriteBlock: React.FunctionComponent = (): JSX.Element => {
   const handleEditorChange = ({ text }) => {
     setContent(text);
   };
-  const contentField = Field.useField({ values: {} });
-  const settingField = Field.useField({
-    values: {
-      rewardsOpen: false,
-      copyrightOn: false,
-      commentable: false,
-      published: false,
-    },
-  });
   const { request: createRequest } = useRequest({
     url: 'http://127.0.0.1:3000/blog',
     method: 'POST',
+  });
+  const { request: updateRequest } = useRequest({
+    url: `http://127.0.0.1:3000/blog/${id}`,
+    method: 'PUT',
   });
   const submit = async () => {
     const { errors: contentErrors } = await contentField.validatePromise();
@@ -84,13 +108,22 @@ const WriteBlock: React.FunctionComponent = (): JSX.Element => {
       return;
     }
     try {
-      await createRequest({
-        data: {
-          ...contentField.getValues(),
-          ...settingField.getValues(),
-        },
-      });
-      Message.success('创建成功');
+      if (id) {
+        await updateRequest({
+          data: {
+            ...contentField.getValues(),
+            ...settingField.getValues(),
+          },
+        });
+      } else {
+        await createRequest({
+          data: {
+            ...contentField.getValues(),
+            ...settingField.getValues(),
+          },
+        });
+      }
+      Message.success(`${id ? '更新' : '创建'}成功`);
     } catch (e) {
       console.error(e.response.data);
     }
@@ -98,7 +131,7 @@ const WriteBlock: React.FunctionComponent = (): JSX.Element => {
   const onCancel = () => {};
 
   return (
-    <div>
+    <Loading visible={loading} style={{ width: '100%' }}>
       <Card ref={containerRef} free className={styles.Card}>
         <Card.Header title="博客内容" />
         <Card.Divider />
@@ -170,13 +203,6 @@ const WriteBlock: React.FunctionComponent = (): JSX.Element => {
                 unCheckedChildren="off"
               />
             </Form.Item>
-            <Form.Item colSpan={12} label="封面">
-              <Select name="frontCover">
-                <Select.Option value={1}>项目一</Select.Option>
-                <Select.Option value={2}>项目二</Select.Option>
-                <Select.Option value={3}>项目三</Select.Option>
-              </Select>
-            </Form.Item>
           </Form>
         </Card.Content>
       </Card>
@@ -202,7 +228,7 @@ const WriteBlock: React.FunctionComponent = (): JSX.Element => {
           </Button>
         </Box>
       </Form.Item>
-    </div>
+    </Loading>
   );
 };
 

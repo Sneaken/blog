@@ -9,9 +9,9 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Card from '@/components/Card.vue';
-import CardInfo from '@/views/Blog/components/left/CardInfo.vue';
-import CardType from '@/views/Blog/components/left/CardType.vue';
-import CardTag from '@/views/Blog/components/left/CardTag.vue';
+import CardInfo from '@/views/blog/components/left/CardInfo.vue';
+import CardType from '@/views/blog/components/left/CardType.vue';
+import CardTag from '@/views/blog/components/left/CardTag.vue';
 @Component({
   components: { CardTag, CardType, CardInfo, Card },
 })
@@ -33,5 +33,4 @@ export default class BlogAsideLeft extends Vue {}
     }
   }
 }
-
 </style>

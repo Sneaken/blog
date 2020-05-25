@@ -8,8 +8,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Card from '@/components/Card.vue';
-import CardArticle from '@/views/Blog/components/right/CardArticle.vue';
-import CardComment from '@/views/Blog/components/right/CardComment.vue';
+import CardArticle from '@/views/blog/components/right/CardArticle.vue';
+import CardComment from '@/views/blog/components/right/CardComment.vue';
 @Component({
   components: { CardComment, CardArticle, Card },
 })

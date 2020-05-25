@@ -1,6 +1,7 @@
 <template>
   <div class="list-item">
     <div class="list-item-top">
+      <h3 class="list-item-top-title">{{ data.title }}</h3>
       <div>
         <span class="middle" v-if="releaseTime">
           <i class="el-icon-date" />
@@ -10,15 +11,7 @@
           <i class="el-icon-chat-dot-round" />
           {{ comments }}
         </span>
-        <span class="middle">
-          <i class="el-icon-time" /> {{ estimatedReadingTime }}分钟
-        </span>
-        <span class="middle">
-          <i class="el-icon-edit" />
-          {{ totalText }} K
-        </span>
       </div>
-      <h3 class="list-item-top-title">{{ data.title }}</h3>
       <div v-html="content" />
       <sk-tag v-for="tag in data.tags" :key="tag"> {{ tag }}</sk-tag>
     </div>
@@ -98,6 +91,9 @@ export default class BlogMainListItem extends Vue {
     align-items: center;
     &:not(:last-child) {
       margin-right: 8px;
+    }
+    i {
+      padding-right: 1px;
     }
   }
   .list-item {

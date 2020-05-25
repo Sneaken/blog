@@ -15,11 +15,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import BlogBanner from '@/views/Blog/components/BlogBanner.vue';
-import BlogFooter from '@/views/Blog/components/BlogFooter.vue';
-import BlogAsideLeft from '@/views/Blog/components/BlogAsideLeft.vue';
-import BlogAsideRight from '@/views/Blog/components/BlogAsideRight.vue';
-import BlogMain from '@/views/Blog/components/BlogMain.vue';
+import BlogBanner from '@/views/blog/components/BlogBanner.vue';
+import BlogFooter from '@/views/blog/components/BlogFooter.vue';
+import BlogAsideLeft from '@/views/blog/components/BlogAsideLeft.vue';
+import BlogAsideRight from '@/views/blog/components/BlogAsideRight.vue';
+import BlogMain from '@/views/blog/components/BlogMain.vue';
 import SkBackTop from '@/components/SkBackTop.vue';
 
 @Component({

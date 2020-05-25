@@ -22,6 +22,7 @@ export class HttpExceptionFilter<T> implements ExceptionFilter {
       response.status(status).json({
         statusCode: status,
         date: new Date().toLocaleDateString(),
+        message: exception,
       });
     }
   }

@@ -21,7 +21,7 @@ const DEFAULT_DATA: IDataSource = {
   password: '',
   autoLogin: true,
   phone: '',
-  code: ''
+  code: '',
 };
 
 const LoginBlock: React.FunctionComponent = (): JSX.Element => {
@@ -39,7 +39,7 @@ const LoginBlock: React.FunctionComponent = (): JSX.Element => {
         setSecond(59);
       }
     },
-    isRunning ? 1000 : null
+    isRunning ? 1000 : null,
   );
 
   const formChange = (values: IDataSource) => {
@@ -56,7 +56,7 @@ const LoginBlock: React.FunctionComponent = (): JSX.Element => {
   // error 在jsx里面能获取到 不知道为什么try catch 里面打印不出来
   const { loading, request, error } = useRequest({
     url: 'http://127.0.0.1:3000/user/login',
-    method: 'POST'
+    method: 'POST',
   });
 
   const handleSubmit = async (values: IDataSource, errors: []) => {
@@ -69,8 +69,8 @@ const LoginBlock: React.FunctionComponent = (): JSX.Element => {
           phone: isPhone ? values.phone : undefined,
           code: isPhone ? values.code : undefined,
           username: isPhone ? undefined : values.name,
-          password: isPhone ? undefined : values.password
-        }
+          password: isPhone ? undefined : values.password,
+        },
       });
 
       Message.success('登录成功');
@@ -157,7 +157,7 @@ const LoginBlock: React.FunctionComponent = (): JSX.Element => {
             alt="logo"
           />
         </a>
-        <p className={styles.desc}>
+        <div className={styles.desc}>
           <span onClick={byAccount} className={isPhone ? '' : styles.active}>
             账户密码登录
           </span>
@@ -165,11 +165,11 @@ const LoginBlock: React.FunctionComponent = (): JSX.Element => {
           <span onClick={byForm} className={isPhone ? styles.active : ''}>
             手机号登录
           </span>
-        </p>
+        </div>
 
         <Form value={postData} onChange={formChange} size="large">
           {isPhone ? phoneForm : accountForm}
-          <p className={styles.infoLine}>
+          <div className={styles.infoLine}>
             <Item style={{ marginBottom: 0 }}>
               <Checkbox name="autoLogin" className={styles.infoLeft}>
                 自动登录
@@ -183,7 +183,7 @@ const LoginBlock: React.FunctionComponent = (): JSX.Element => {
             {/*    忘记密码 */}
             {/*  </a> */}
             {/* </div> */}
-          </p>
+          </div>
 
           <Item style={{ marginBottom: 10 }}>
             <Form.Submit

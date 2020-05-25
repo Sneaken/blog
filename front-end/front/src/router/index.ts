@@ -8,7 +8,13 @@ const routes: Array<RouteConfig> = [
     path: '/',
     name: 'Blog',
     component: () =>
-      import(/* webpackChunkName: "blog" */ '@/views/Blog/Blog.vue'),
+      import(/* webpackChunkName: "blog" */ '@/views/blog/Blog.vue'),
+  },
+  {
+    path: '/resume',
+    name: 'Resume',
+    component: () =>
+      import(/* webpackChunkName: "resume" */ '@/views/resume/Resume.vue'),
   },
 ];
 

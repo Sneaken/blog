@@ -25,7 +25,7 @@ export class BlogService {
     } catch (e) {
       return {
         code: ApiErrorCode.BLOG_CREATE_ERROR,
-        message: '博客创建失败',
+        message: ApiErrorMessage.BLOG_CREATE_ERROR,
       };
     }
   }
@@ -35,7 +35,17 @@ export class BlogService {
    * @param id
    */
   async remove(id) {
-    await this.blogModel.findByIdAndDelete(id);
+    try {
+      await this.blogModel.findByIdAndDelete(id);
+      return {
+        code: ApiErrorCode.SUCCESS,
+      };
+    } catch (e) {
+      return {
+        code: ApiErrorCode.BLOG_DELETE_ERROR,
+        message: ApiErrorMessage.BLOG_DELETE_ERROR,
+      };
+    }
   }
 
   /**
@@ -44,7 +54,17 @@ export class BlogService {
    * @param updateBlogDto
    */
   async update(id: string, updateBlogDto: UpdateBlogDto) {
-    await this.blogModel.findByIdAndUpdate(id, updateBlogDto);
+    try {
+      await this.blogModel.findByIdAndUpdate(id, updateBlogDto);
+      return {
+        code: ApiErrorCode.SUCCESS,
+      };
+    } catch (e) {
+      return {
+        code: ApiErrorCode.BLOG_UPDATE_ERROR,
+        message: ApiErrorMessage.BLOG_UPDATE_ERROR,
+      };
+    }
   }
 
   /**
@@ -68,7 +88,12 @@ export class BlogService {
       );
       list.forEach(item => {
         // 只显示前100字
-        item.content = item.content.substring(0, 200);
+        const result = item.content.substring(0, 300).split('\n');
+        if (result.length > 1) {
+          result.pop();
+        }
+        result.push('', '...');
+        item.content = result.join('\n');
       });
       return {
         code: ApiErrorCode.SUCCESS,
@@ -87,7 +112,59 @@ export class BlogService {
    * @param id
    */
   async blog(id) {
-    return this.blogModel.findById(id);
+    try {
+      const data = await this.blogModel.findById(id);
+      return {
+        code: ApiErrorCode.SUCCESS,
+        data,
+      };
+    } catch (e) {
+      return {
+        code: ApiErrorCode.BLOG_CONTENT_ERROR,
+        message: ApiErrorMessage.BLOG_CONTENT_ERROR,
+      };
+    }
+  }
+
+  /**
+   * 根据条件查找博客
+   * @param query
+   */
+  async queryByCondition(query) {
+    try {
+      const queryList = {};
+      Object.keys(query).forEach(key => {
+        if (key !== 'title') {
+          queryList[key] = query[key] || 0;
+        }
+      });
+      const list = await this.blogModel.find(
+        {
+          title: { $regex: query?.title?.trim() ?? '', $options: '$i' },
+          ...queryList,
+        },
+        {
+          _id: 1,
+          title: 1,
+          type: 1,
+          tags: 1,
+          views: 1,
+          published: 1,
+          updatedAt: 1,
+          createdAt: 1,
+        },
+      );
+      return {
+        code: ApiErrorCode.SUCCESS,
+        data: list,
+      };
+    } catch (e) {
+      console.log(e);
+      return {
+        code: ApiErrorCode.BLOG_LIST_QUERY_BY_CONDITION_ERROR,
+        message: ApiErrorMessage.BLOG_LIST_QUERY_BY_CONDITION_ERROR,
+      };
+    }
   }
 
   /**

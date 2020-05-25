@@ -152,6 +152,7 @@ export default class SkImage extends Vue {
     this.imageWidth = img.width;
     this.imageHeight = img.height;
     this.loading = false;
+    this.error = false;
   }
   handleError() {
     this.loading = false;

@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { BlogService } from '../services/blog.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -14,6 +15,7 @@ import { CreateBlogDto, UpdateBlogDto } from '../dto/blog.dto';
 import { ApiErrorCode } from '../../common/enums/api-error-code.enum';
 import { ApiException } from '../../common/exceptions/api.exception';
 import { ReportService } from '../../report/service/report.service';
+import { ListConditionPipe } from '../pipes/list-condition.pipe';
 
 @Controller('blog')
 @ApiTags('文章相关')
@@ -27,6 +29,20 @@ export class BlogController {
   @ApiOperation({ summary: '获取全部分类和标签' })
   async typeAndTags() {
     const result = await this.blogService.findTypeAndTags();
+    if (result.code !== ApiErrorCode.SUCCESS) {
+      throw new ApiException(
+        result.message,
+        result.code,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return result;
+  }
+
+  @Get('condition')
+  @ApiOperation({ summary: '按条件查询' })
+  async condition(@Query(new ListConditionPipe()) query) {
+    const result = await this.blogService.queryByCondition(query);
     if (result.code !== ApiErrorCode.SUCCESS) {
       throw new ApiException(
         result.message,
@@ -67,8 +83,16 @@ export class BlogController {
 
   @Get(':id')
   @ApiOperation({ summary: '博客详情' })
-  getArticle(@Param('id') id: string) {
-    return this.blogService.blog(id);
+  async getArticle(@Param('id') id: string) {
+    const result = await this.blogService.blog(id);
+    if (result.code !== ApiErrorCode.SUCCESS) {
+      throw new ApiException(
+        result.message,
+        result.code,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return result;
   }
 
   @Post()
@@ -131,12 +155,26 @@ export class BlogController {
       published,
       frontCover,
     );
-    await this.blogService.update(id, dto);
+    const result = await this.blogService.update(id, dto);
+    if (result.code !== ApiErrorCode.SUCCESS) {
+      throw new ApiException(
+        result.message,
+        result.code,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   @Delete(':id')
   @ApiOperation({ summary: '删除博客' })
   async removeArticle(@Param('id') id: string) {
-    await this.blogService.remove(id);
+    const result = await this.blogService.remove(id);
+    if (result.code !== ApiErrorCode.SUCCESS) {
+      throw new ApiException(
+        result.message,
+        result.code,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }

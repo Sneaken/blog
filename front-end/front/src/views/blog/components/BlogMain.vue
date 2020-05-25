@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import BlogMainListItem from '@/views/Blog/components/BlogMainListItem.vue';
+import BlogMainListItem from '@/views/blog/components/BlogMainListItem.vue';
 import { blogList } from '@/api/blog-index';
 
 @Component({

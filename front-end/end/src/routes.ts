@@ -27,6 +27,7 @@ import FeedbackNotFound from '@/pages/FeedbackNotFound';
 import FeedbackServerError from '@/pages/FeedbackServerError';
 import Person from '@/pages/Person';
 import BlogWrite from '@/pages/BlogWrite';
+import BlogListPage from '@/pages/BlogManage';
 
 const routerConfig = [
   {
@@ -148,12 +149,12 @@ const routerConfig = [
         component: Person,
       },
       {
-        path: '/blog/write',
+        path: '/blog/write/:id?',
         component: BlogWrite,
       },
       {
-        path: '/blog/update',
-        component: BlogWrite,
+        path: '/blog/manage',
+        component: BlogListPage,
       },
       {
         path: '/',

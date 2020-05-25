@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import BlogHeader from '@/views/Blog/components/BlogHeader.vue';
+import BlogHeader from '@/views/blog/components/BlogHeader.vue';
 @Component({
   components: { BlogHeader },
 })

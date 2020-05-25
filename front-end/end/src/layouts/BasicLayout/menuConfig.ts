@@ -11,8 +11,8 @@ const asideMenuConfig = [
         path: '/blog/write',
       },
       {
-        name: '修改博客',
-        path: '/blog/update',
+        name: '博客管理',
+        path: '/blog/manage',
       },
     ],
   },
