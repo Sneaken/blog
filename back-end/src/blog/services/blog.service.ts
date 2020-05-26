@@ -73,28 +73,19 @@ export class BlogService {
   async list() {
     try {
       const list = await this.blogModel.find(
-        {},
         {
-          _id: 1,
+          published: true,
+        },
+        {
           title: 1,
+          frontPart: 1,
           type: 1,
           tags: 1,
           views: 1,
-          frontCover: 1,
-          content: 1,
-          updatedAt: 1,
           createdAt: 1,
+          updatedAt: 1,
         },
       );
-      list.forEach(item => {
-        // 只显示前100字
-        const result = item.content.substring(0, 300).split('\n');
-        if (result.length > 1) {
-          result.pop();
-        }
-        result.push('', '...');
-        item.content = result.join('\n');
-      });
       return {
         code: ApiErrorCode.SUCCESS,
         data: list,
@@ -166,7 +157,7 @@ export class BlogService {
         { $sort: { updatedAt: -1 } },
         { $skip: ((query.currentPage ?? 1) - 1) * 10 },
         { $limit: 10 },
-        { $project: { frontCover: 0, __v: 0 } },
+        { $project: { frontPart: 0, __v: 0 } },
       ]);
       const total = await promise1;
       const list = await promise2;

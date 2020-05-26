@@ -63,21 +63,8 @@ export default class BlogMainListItem extends Vue {
     return this.data.updatedAt.split('T').shift() || '';
   }
 
-  private get totalText(): number {
-    return ((this.data.content.length / 1000) * 3) | 0;
-  }
-
-  private get estimatedReadingTime(): number {
-    // 在中文环境下，成人的平均阅读速度为 500 字/分钟。
-    const result = (this.totalText / 500) | 0;
-    if (result === 0) {
-      return 1;
-    }
-    return result;
-  }
-
   private get content(): string {
-    return md.render(this.data.content);
+    return md.render(this.data.frontPart);
   }
 
   private comments = '1';

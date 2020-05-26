@@ -22,8 +22,8 @@ export class CreateBlogDto {
   commentable: boolean;
   @ApiProperty({ description: '发布', example: true })
   published: boolean;
-  @ApiProperty({ description: '封面', example: 'http://xxx.png' })
-  frontCover?: string;
+  @ApiProperty({ description: '列表页展示内容', example: 'nest new blog' })
+  frontPart?: string;
 
   constructor(
     title: string,
@@ -34,13 +34,13 @@ export class CreateBlogDto {
     copyrightOn: boolean,
     commentable: boolean,
     published: boolean,
-    frontCover: string,
+    frontPart: string,
   ) {
     this.title = title;
     this.content = content;
     this.type = type;
     this.tags = tags;
-    this.frontCover = frontCover;
+    this.frontPart = frontPart;
     this.rewardsOpen = rewardsOpen;
     this.copyrightOn = copyrightOn;
     this.commentable = commentable;
@@ -66,8 +66,8 @@ export class UpdateBlogDto {
   commentable: boolean;
   @ApiProperty({ description: '发布', example: true })
   published: boolean;
-  @ApiProperty({ description: '封面', example: 'http://xxx.png' })
-  frontCover?: string;
+  @ApiProperty({ description: '列表页展示段落', example: 'nest new blog' })
+  frontPart?: string;
 
   constructor(
     title: string,
@@ -78,13 +78,13 @@ export class UpdateBlogDto {
     copyrightOn: boolean,
     commentable: boolean,
     published: boolean,
-    frontCover: string,
+    frontPart: string,
   ) {
     this.title = title;
     this.content = content;
     this.type = type;
     this.tags = tags;
-    this.frontCover = frontCover;
+    this.frontPart = frontPart;
     this.rewardsOpen = rewardsOpen;
     this.copyrightOn = copyrightOn;
     this.commentable = commentable;

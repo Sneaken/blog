@@ -2,7 +2,7 @@ import { Document } from 'mongoose';
 export interface Blog extends Document {
   title: string; // 标题
   content: string; // 内容
-  frontCover: string; // 封面
+  frontPart: string; // 列表页内容
   type: string[]; // 分类
   tags: string[]; // 标签
   views: number; // 浏览次数

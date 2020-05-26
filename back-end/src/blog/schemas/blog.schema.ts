@@ -4,7 +4,7 @@ export const BlogSchema = new mongoose.Schema(
   {
     title: String, // 标题
     content: String, // 内容
-    frontCover: String, // 封面
+    frontPart: String, // 列表页展示段落
     type: [String], // 分类
     tags: [String], // 标签
     views: Number, // 浏览次数

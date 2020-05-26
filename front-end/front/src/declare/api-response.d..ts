@@ -28,10 +28,9 @@ declare interface BlogListResponse extends BaseResponse {
 declare interface BlogListItem {
   _id: string;
   title: string; // 标题
-  content: string; // 内容
-  frontCover: string; // 封面
-  tags: string[]; // 标签
+  frontPart: string; // 列表页展示段落
   type: string[]; // 分类
+  tags: string[]; // 标签
   views: number; // 浏览量
   updatedAt: string; // 更新时间
   createdAt: string; // 创建时间

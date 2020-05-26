@@ -26,6 +26,7 @@ const mdParser = new MarkdownIt(/* Markdown-it options */);
 const WriteBlock: React.FunctionComponent = (): JSX.Element => {
   const { id } = useParams();
   const [content, setContent] = useState('');
+  const [frontPart, setFrontPart] = useState('');
   const containerRef = useRef(null);
   const [left, setLeft] = useState(0);
   const [right, setRight] = useState(0);
@@ -34,6 +35,7 @@ const WriteBlock: React.FunctionComponent = (): JSX.Element => {
     tags: [],
   });
   const contentField = Field.useField({ values: {} });
+  const frontPartField = Field.useField({ values: {} });
   const settingField = Field.useField({
     values: {
       rewardsOpen: false,
@@ -69,6 +71,7 @@ const WriteBlock: React.FunctionComponent = (): JSX.Element => {
       infoRequest()
         .then(({ data }) => {
           setContent(data.content);
+          setFrontPart(data.frontPart);
           settingField.setValue('title', data.title);
           settingField.setValue('type', data.type);
           settingField.setValue('tags', data.tags);
@@ -92,6 +95,9 @@ const WriteBlock: React.FunctionComponent = (): JSX.Element => {
   const handleEditorChange = ({ text }) => {
     setContent(text);
   };
+  const handleEditorPartChange = ({ text }) => {
+    setFrontPart(text);
+  };
   const { request: createRequest } = useRequest({
     url: 'http://127.0.0.1:3000/blog',
     method: 'POST',
@@ -102,15 +108,17 @@ const WriteBlock: React.FunctionComponent = (): JSX.Element => {
   });
   const submit = async () => {
     const { errors: contentErrors } = await contentField.validatePromise();
+    const { errors: frontPartErrors } = await frontPartField.validatePromise();
     const { errors: settingErrors } = await settingField.validatePromise();
 
-    if (settingErrors || contentErrors) {
+    if (settingErrors || contentErrors || frontPartErrors) {
       return;
     }
     try {
       if (id) {
         await updateRequest({
           data: {
+            ...frontPartField.getValues(),
             ...contentField.getValues(),
             ...settingField.getValues(),
           },
@@ -118,6 +126,7 @@ const WriteBlock: React.FunctionComponent = (): JSX.Element => {
       } else {
         await createRequest({
           data: {
+            ...frontPartField.getValues(),
             ...contentField.getValues(),
             ...settingField.getValues(),
           },
@@ -132,6 +141,23 @@ const WriteBlock: React.FunctionComponent = (): JSX.Element => {
 
   return (
     <Loading visible={loading} style={{ width: '100%' }}>
+      <Card free className={styles.Card}>
+        <Card.Header title="博客列表页展示内容" />
+        <Card.Divider />
+        <Card.Content>
+          <Form field={frontPartField} responsive fullWidth labelAlign="top">
+            <Form.Item colSpan={12} required>
+              <MdEditor
+                name="frontPart"
+                htmlClass={styles.EditorFrontPart}
+                value={frontPart}
+                renderHTML={text => mdParser.render(text)}
+                onChange={handleEditorPartChange}
+              />
+            </Form.Item>
+          </Form>
+        </Card.Content>
+      </Card>
       <Card ref={containerRef} free className={styles.Card}>
         <Card.Header title="博客内容" />
         <Card.Divider />

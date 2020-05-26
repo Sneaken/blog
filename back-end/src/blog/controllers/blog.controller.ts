@@ -107,7 +107,7 @@ export class BlogController {
       copyrightOn,
       commentable,
       published,
-      frontCover,
+      frontPart,
     } = body;
     const dto = new CreateBlogDto(
       title,
@@ -118,7 +118,7 @@ export class BlogController {
       copyrightOn,
       commentable,
       published,
-      frontCover,
+      frontPart,
     );
     const result = await this.blogService.create(dto);
     if (result.code !== ApiErrorCode.SUCCESS) {
@@ -142,7 +142,7 @@ export class BlogController {
       copyrightOn,
       commentable,
       published,
-      frontCover,
+      frontPart,
     } = body;
     const dto = new UpdateBlogDto(
       title,
@@ -153,7 +153,7 @@ export class BlogController {
       copyrightOn,
       commentable,
       published,
-      frontCover,
+      frontPart,
     );
     const result = await this.blogService.update(id, dto);
     if (result.code !== ApiErrorCode.SUCCESS) {

@@ -81,6 +81,13 @@ export class QuotationService {
         {
           $sample: { size: 1 },
         },
+        {
+          $project: {
+            chinese: 1,
+            english: 1,
+            _id: 0,
+          },
+        },
       ]);
       if (result.length !== 1) {
         return {
