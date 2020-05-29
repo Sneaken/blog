@@ -74,7 +74,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { Component, Prop, Ref, Vue, Watch } from 'vue-property-decorator';
 import { isFirefox, rafThrottle } from '@/utils/util';
 import { off, on } from '@/utils/dom';
 import { dar, dfn } from '@/utils/other';
@@ -116,6 +116,11 @@ export default class SkImageViewer extends Vue {
   private readonly initialIndex!: number;
   @Prop({ type: Boolean, default: false })
   private readonly isShow!: boolean;
+
+  @Ref('img')
+  private readonly img!: HTMLImageElement[];
+  @Ref('sk-image-viewer__wrapper')
+  private readonly skImageViewerWrapper!: HTMLDivElement;
 
   private index = this.initialIndex;
   private infinite = true;
@@ -167,7 +172,7 @@ export default class SkImageViewer extends Vue {
   @Watch('currentImg')
   currentImgChange() {
     this.$nextTick(() => {
-      const $img = (this.$refs.img as HTMLImageElement[])[0];
+      const $img = this.img[0];
       if (!$img.complete) {
         this.loading = true;
       }
@@ -180,7 +185,7 @@ export default class SkImageViewer extends Vue {
     await this.$nextTick();
     if (val) {
       this.deviceSupportInstall();
-      (this.$refs['sk-image-viewer__wrapper'] as HTMLDivElement).focus();
+      this.skImageViewerWrapper.focus();
     }
   }
 
