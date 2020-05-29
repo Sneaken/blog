@@ -1,8 +1,8 @@
 <template>
   <footer class="blog-footer">
     <div>
-      <p class="no-margin">© 2020 Sneaker | Use Vue</p>
-      <p>
+      <p class="no-margin" v-pre>© 2020 Sneaker | Use Vue</p>
+      <p v-pre>
         © 版权说明：[本网站所有内容均收集于互联网或自己创作,
         方便网友与自己学习交流，如有侵权，请留言，立即处理]
       </p>

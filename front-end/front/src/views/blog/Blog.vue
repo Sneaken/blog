@@ -15,8 +15,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import BlogBanner from '@/views/blog/components/BlogBanner.vue';
-import BlogFooter from '@/views/blog/components/BlogFooter.vue';
+import BlogBanner from '@/components/BlogBanner.vue';
+import BlogFooter from '@/components/BlogFooter.vue';
 import BlogAsideLeft from '@/views/blog/components/BlogAsideLeft.vue';
 import BlogAsideRight from '@/views/blog/components/BlogAsideRight.vue';
 import BlogMain from '@/views/blog/components/BlogMain.vue';
@@ -69,8 +69,5 @@ export default class Blog extends Vue {}
   .blog-aside-right {
     min-width: 525px;
   }
-}
-.footer {
-  text-align: center;
 }
 </style>

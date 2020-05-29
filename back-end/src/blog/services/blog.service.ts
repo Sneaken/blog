@@ -104,7 +104,9 @@ export class BlogService {
    */
   async blog(id) {
     try {
-      const data = await this.blogModel.findById(id);
+      const data = await this.blogModel.findById(id, {
+        __v: 0,
+      });
       return {
         code: ApiErrorCode.SUCCESS,
         data,

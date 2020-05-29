@@ -35,3 +35,20 @@ declare interface BlogListItem {
   updatedAt: string; // 更新时间
   createdAt: string; // 创建时间
 }
+
+declare interface BlogResponse extends BaseResponse {
+  data: Blog;
+}
+declare interface Blog {
+  _id: string;
+  title: string; // 标题
+  type: string[]; // 分类
+  tags: string[]; // 标签
+  views: number; // 浏览量
+  content: string; // 内容
+  commentable: boolean; // 是否可评论
+  copyrightOn: boolean; // 版权信息
+  rewardsOpen: boolean; // 是否显示打赏
+  updatedAt: string; // 更新时间
+  createdAt: string; // 创建时间
+}
