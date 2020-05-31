@@ -25,14 +25,18 @@ export default class CatalogList extends Vue {
           if (item.children) {
             return (
               <li class={`item d${item.mark.length}`}>
-                <a title={item.title}>{item.title}</a>
+                <a href={`#heading-${item.id}`} title={item.title}>
+                  {item.title}
+                </a>
                 {this.createCatalog(item.children)}
               </li>
             );
           }
           return (
             <li class={`item d${item.mark.length}`}>
-              <a title={item.title}>{item.title}</a>
+              <a href={`#heading-${item.id}`} title={item.title}>
+                {item.title}
+              </a>
             </li>
           );
         })}
@@ -47,6 +51,11 @@ export default class CatalogList extends Vue {
 </script>
 
 <style lang="less" scoped>
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #909090;
+}
 ul {
   margin: 0;
   padding: 0;
@@ -66,6 +75,10 @@ ul {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: inherit;
+    &:hover {
+      background-color: #ebedef;
+    }
     &::before {
       content: '';
       position: absolute;

@@ -11,7 +11,7 @@ const routes: Array<RouteConfig> = [
       import(/* webpackChunkName: "blog" */ '@/views/blog/Blog.vue'),
   },
   {
-    path: '/blog/:id',
+    path: '/article/:id',
     name: 'DetailPage',
     component: () =>
       import(/* webpackChunkName: "blog" */ '@/views/detail/DetailPage.vue'),
@@ -26,6 +26,7 @@ const routes: Array<RouteConfig> = [
 ];
 
 const router = new VueRouter({
+  mode: 'history',
   routes,
 });
 

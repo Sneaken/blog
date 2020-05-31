@@ -1,5 +1,5 @@
 <template>
-  <div class="list-item" @click="$router.push(`/blog/${data._id}`)">
+  <div class="list-item" @click="$router.push(`/article/${data._id}`)">
     <div class="list-item-top">
       <h3 class="list-item-top-title">{{ data.title }}</h3>
       <div>

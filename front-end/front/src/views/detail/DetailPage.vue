@@ -72,10 +72,8 @@ export default class DetailPage extends Vue {
   margin-right: @rightWidth;
 }
 .directory {
-  float: left;
-  margin-left: -100%;
-  padding: 20px;
-  width: @leftWidth;
+  position: fixed;
+  top: 100px;
 }
 .blog-aside-right {
   float: left;

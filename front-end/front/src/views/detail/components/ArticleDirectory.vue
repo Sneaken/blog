@@ -49,15 +49,17 @@ export default class ArticleDirectory extends Vue {
       father: null,
     };
     const list: ListNode[] = [];
+    let id = 0;
     while ((matcher = re.exec(this.data)) !== null) {
       const length = matcher[1].length;
       current = {
-        id: matcher.index,
+        id,
         mark: matcher[1],
         title: matcher[2].trim(),
         children: [],
         father: null,
       };
+      id++;
       if (length === 1) {
         current.father = list;
         list.push(current);

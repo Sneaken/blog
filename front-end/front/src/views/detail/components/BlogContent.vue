@@ -1,7 +1,6 @@
 <template>
   <main>
     <article>
-      <h1>标题</h1>
       <div class="blog-content" v-html="content" />
     </article>
   </main>
@@ -16,6 +15,7 @@ const md: MarkdownIt = new MarkdownIt({
   linkify: true,
   typographer: true,
   highlight: function(str, lang) {
+    console.log(str);
     if (lang && hljs.getLanguage(lang)) {
       try {
         return `<pre class="hljs"><code>${
@@ -36,7 +36,25 @@ export default class BlogContent extends Vue {
   private content = '';
 
   private mounted() {
-    this.content = md.render(this.data);
+    this.content = this.search(md.render(this.data));
+  }
+
+  search(content: string) {
+    const re = /<(h\d)>(.*)<\/h\d>/g;
+    let matcher;
+    const replaceList = [];
+    let id = 0;
+    while ((matcher = re.exec(content)) !== null) {
+      replaceList.push({
+        source: matcher[0],
+        target: `<${matcher[1]} id="heading-${id}">${matcher[2]}</${matcher[1]}>`,
+      });
+      id++;
+    }
+    replaceList.forEach(item => {
+      content = content.replace(item.source, item.target);
+    });
+    return content;
   }
 }
 </script>
