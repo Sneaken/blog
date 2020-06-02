@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
+    <blog-banner />
     <div class="blog-container">
-      <blog-banner />
       <div class="blog-container-center">
         <blog-main class="blog-main" />
         <sk-back-top />
