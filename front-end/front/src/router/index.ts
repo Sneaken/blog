@@ -18,6 +18,10 @@ const routes: Array<RouteConfig> = [
     props: true,
   },
   {
+    path: '/article',
+    redirect: '/',
+  },
+  {
     path: '/resume',
     name: 'Resume',
     component: () =>
