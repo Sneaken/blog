@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <blog-banner />
+  <div class="wrap">
     <div class="blog-container">
+      <blog-banner />
       <div class="blog-container-center">
         <blog-main class="blog-main" />
         <sk-back-top />
@@ -38,8 +38,14 @@ export default class Blog extends Vue {}
 <style lang="less" scoped>
 @leftWidth: 20vw;
 @rightWidth: 35vw;
+.wrap {
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+}
 .blog-container {
   overflow: hidden;
+  flex: 1;
 }
 .blog-container-center {
   float: left;

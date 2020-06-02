@@ -1,7 +1,5 @@
 <template>
-  <div class="blog-banner">
-    <blog-header />
-  </div>
+  <blog-header class="blog-banner" />
 </template>
 
 <script lang="ts">
