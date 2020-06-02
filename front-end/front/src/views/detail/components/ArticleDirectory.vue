@@ -1,10 +1,14 @@
 <template>
-  <nav class="article-catalog">
+  <aside class="article-catalog">
     <div class="catalog-title">目录</div>
     <div class="catalog-body">
-      <catalog-list class="catalog-list" :list="list" />
+      <catalog-list
+        class="catalog-list"
+        :list="list"
+        :style="{ marginTop: `${marginTop}px` }"
+      />
     </div>
-  </nav>
+  </aside>
 </template>
 
 <script lang="ts">
@@ -30,6 +34,8 @@ interface ListNode extends ListItem {
 export default class ArticleDirectory extends Vue {
   @Prop({ type: String, required: true })
   private readonly data!: string;
+  @Prop({ type: Number, default: 0 })
+  private readonly marginTop!: number;
 
   private list: List[] = [];
 
@@ -49,7 +55,9 @@ export default class ArticleDirectory extends Vue {
       father: null,
     };
     const list: ListNode[] = [];
+    let temp: ListNode[] | null = [];
     let id = 0;
+    let minMark = 6;
     while ((matcher = re.exec(this.data)) !== null) {
       const length = matcher[1].length;
       current = {
@@ -59,12 +67,19 @@ export default class ArticleDirectory extends Vue {
         children: [],
         father: null,
       };
+      if (minMark > length) {
+        minMark = length;
+      }
       id++;
-      if (length === 1) {
+      temp.push(current);
+    }
+    temp.forEach(current => {
+      const length = current.mark.length;
+      if (length === minMark) {
         current.father = list;
         list.push(current);
         pre = current;
-        continue;
+        return;
       }
       if (length > pre.mark.length) {
         // 是上级的子目录
@@ -81,12 +96,13 @@ export default class ArticleDirectory extends Vue {
         current.father.children.push(current);
       }
       pre = current;
-    }
+    });
+    temp = null;
     this.list = this.deleteFather(list) as List[];
   }
 
   // 删除father属性
-  deleteFather(list: ListNode[]) {
+  private deleteFather(list: ListNode[]) {
     return list.map(item => {
       delete item.father;
       if (item.children?.length === 0) {
@@ -104,7 +120,8 @@ export default class ArticleDirectory extends Vue {
 
 <style lang="less" scoped>
 .article-catalog {
-  margin: 10px;
+  padding: 10px;
+  background-color: #fff;
 }
 .catalog-title {
   font-size: 1.167rem;
@@ -113,8 +130,10 @@ export default class ArticleDirectory extends Vue {
 .catalog-body {
   position: relative;
   margin: 6px 20px;
+  overflow: hidden;
   .catalog-list {
     padding: 0;
+    position: relative;
   }
 }
 </style>

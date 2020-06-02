@@ -1,9 +1,5 @@
 <template>
-  <main>
-    <article>
-      <div class="blog-content" v-html="content" />
-    </article>
-  </main>
+  <section class="blog-content" v-html="content" />
 </template>
 
 <script lang="ts">
@@ -15,7 +11,6 @@ const md: MarkdownIt = new MarkdownIt({
   linkify: true,
   typographer: true,
   highlight: function(str, lang) {
-    console.log(str);
     if (lang && hljs.getLanguage(lang)) {
       try {
         return `<pre class="hljs"><code>${
@@ -61,7 +56,6 @@ export default class BlogContent extends Vue {
 
 <style lang="less" scoped>
 .blog-content {
-  padding: 10px;
   /deep/ ul {
     list-style-type: none;
   }
