@@ -6,6 +6,7 @@
         class="catalog-list"
         :list="list"
         :style="{ marginTop: `${marginTop}px` }"
+        @click.native="handleCatalogClick"
       />
     </div>
   </aside>
@@ -38,6 +39,8 @@ export default class ArticleDirectory extends Vue {
   private readonly marginTop!: number;
 
   private list: List[] = [];
+
+  private _lastElement: HTMLElement | null = null;
 
   private mounted() {
     this.search();
@@ -115,13 +118,18 @@ export default class ArticleDirectory extends Vue {
       }
     });
   }
+  private handleCatalogClick(e: Event) {
+    this._lastElement && this._lastElement.classList.remove('current');
+    const current = e.target as HTMLElement;
+    current.classList.add('current');
+    this._lastElement = current;
+  }
 }
 </script>
 
 <style lang="less" scoped>
 .article-catalog {
   padding: 10px;
-  background-color: #fff;
 }
 .catalog-title {
   font-size: 1.167rem;
@@ -134,6 +142,16 @@ export default class ArticleDirectory extends Vue {
   .catalog-list {
     padding: 0;
     position: relative;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 7px;
+      bottom: 0;
+      width: 2px;
+      background-color: #ebedef;
+      opacity: 0.5;
+    }
   }
 }
 </style>
