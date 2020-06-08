@@ -52,3 +52,30 @@ declare interface Blog {
   updatedAt: string; // 更新时间
   createdAt: string; // 创建时间
 }
+
+declare interface HotBlogResponse extends BaseResponse {
+  data: HotBlog[];
+}
+declare interface HotBlog {
+  _id: string;
+  title: string; // 标题
+  updatedAt: string; // 更新时间
+  createdAt: string; // 创建时间
+}
+
+declare interface BlogAuthorInfoResponse extends BaseResponse {
+  data: AuthorInfo;
+}
+declare interface AuthorInfo {
+  blogs: number;
+  types: number;
+  tags: number;
+}
+
+declare interface BlogTypesAndTagsResponse extends BaseResponse {
+  data: TypesAndTags;
+}
+declare interface TypesAndTags {
+  type: string[];
+  tags: string[];
+}

@@ -38,6 +38,19 @@ export class BlogController {
     }
     return result;
   }
+  @Get('info/author')
+  @ApiOperation({ summary: '获取类目数量' })
+  async authorInfo() {
+    const result = await this.blogService.getAuthorInfo();
+    if (result.code !== ApiErrorCode.SUCCESS) {
+      throw new ApiException(
+        result.message,
+        result.code,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return result;
+  }
 
   @Get('condition')
   @ApiOperation({ summary: '按条件查询' })
@@ -53,10 +66,24 @@ export class BlogController {
     return result;
   }
 
-  @Get('list')
+  @Get('list/hot')
+  @ApiOperation({ summary: '显示最火的5篇博文' })
+  async getLatestArticleList() {
+    const result = await this.blogService.hotList();
+    if (result.code !== ApiErrorCode.SUCCESS) {
+      throw new ApiException(
+        result.message,
+        result.code,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return result;
+  }
+
+  @Get('list/:currentPage?')
   @ApiOperation({ summary: '显示博客列表' })
-  async getArticleList() {
-    const result = await this.blogService.list();
+  async getArticleList(@Param('currentPage') currentPage: string) {
+    const result = await this.blogService.list(currentPage);
     if (result.code !== ApiErrorCode.SUCCESS) {
       throw new ApiException(
         result.message,

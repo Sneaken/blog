@@ -14,6 +14,8 @@ export enum ApiErrorCode {
   BLOG_CONTENT_ERROR = 'B0104',
   BLOG_UPDATE_ERROR = 'B0105',
   BLOG_DELETE_ERROR = 'B0106',
+  BLOG_INFO_AUTHOR_ERROR = 'B0107',
+  BLOG_LIST_HOT_ERROR = 'B0108',
 
   QUOTATION_CREATE_ERROR = 'B0201', // 语录传创建失败
   QUOTATION_GET_ERROR = 'B0202', // 语录获取失败
@@ -39,6 +41,8 @@ export enum ApiErrorMessage {
   BLOG_CONTENT_ERROR = '博客内容获取失败',
   BLOG_UPDATE_ERROR = '博客更新失败',
   BLOG_DELETE_ERROR = '博客删除失败',
+  BLOG_INFO_AUTHOR_ERROR = '查询博主信息失败',
+  BLOG_LIST_HOT_ERROR = '最火博客列表获取失败',
 
   QUOTATION_CREATE_ERROR = '语录传创建失败',
   QUOTATION_GET_ERROR = '语录获取失败',

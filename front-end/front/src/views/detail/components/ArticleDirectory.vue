@@ -1,5 +1,5 @@
 <template>
-  <aside class="article-catalog">
+  <aside v-if="list.length > 0" class="article-catalog">
     <div class="catalog-title">目录</div>
     <div class="catalog-body">
       <catalog-list

@@ -89,7 +89,7 @@ export default class DetailPage extends Vue {
   private async mounted() {
     await this.getData();
     await this.getTitleTop();
-    this.aList[0].classList.add('current');
+    this.aList[0]?.classList.add('current');
     this._scrollHandler = throttle(40, this.handleScroll);
     document.addEventListener('scroll', this._scrollHandler);
     this.$once('hook:beforeDestroy', () => {

@@ -31,3 +31,32 @@ export async function blogList() {
   const { data } = await axios.get<BlogListResponse>(url, { params: {} });
   return data.data;
 }
+
+/**
+ * 获取最新5篇博文
+ */
+export async function latestBlogList() {
+  const url = 'http://127.0.0.1:3000/blog/list/hot';
+  const { data } = await axios.get<HotBlogResponse>(url, { params: {} });
+  return data.data;
+}
+
+/**
+ * 获取博主信息
+ */
+export async function getBlogAuthorInfo() {
+  const url = 'http://127.0.0.1:3000/blog/info/author';
+  const { data } = await axios.get<BlogAuthorInfoResponse>(url, { params: {} });
+  return data.data;
+}
+
+/**
+ * 获取分类和标签
+ */
+export async function getTypesAndTags() {
+  const url = 'http://127.0.0.1:3000/blog/info';
+  const { data } = await axios.get<BlogTypesAndTagsResponse>(url, {
+    params: {},
+  });
+  return data.data;
+}

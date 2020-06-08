@@ -76,7 +76,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import Card from '@/components/Card.vue';
 import SkA from '@/components/SkA.vue';
-import { getQuotation } from '@/api/blog-index';
+import { getBlogAuthorInfo, getQuotation } from '@/api/blog-index';
 
 @Component({
   components: { SkA, Card },
@@ -91,10 +91,21 @@ export default class CardInfo extends Vue {
   };
   mounted() {
     this.handleQuotation();
+    this.getBlogAuthorInfo();
   }
   async handleQuotation() {
     try {
       this.quotation = await getQuotation();
+    } catch (e) {
+      console.error(e.message);
+    }
+  }
+  async getBlogAuthorInfo() {
+    try {
+      const result = await getBlogAuthorInfo();
+      this.article = result.blogs;
+      this.types = result.types;
+      this.tags = result.tags;
     } catch (e) {
       console.error(e.message);
     }

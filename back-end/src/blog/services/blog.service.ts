@@ -70,22 +70,25 @@ export class BlogService {
   /**
    * 博文列表
    */
-  async list() {
+  async list(currentPage) {
     try {
-      const list = await this.blogModel.find(
+      const list = await this.blogModel.aggregate([
+        { $match: { published: true } },
+        { $sort: { updatedAt: -1 } },
+        { $skip: ((currentPage ?? 1) - 1) * 10 },
+        { $limit: 10 },
         {
-          published: true,
+          $project: {
+            title: 1,
+            frontPart: 1,
+            type: 1,
+            tags: 1,
+            views: 1,
+            createdAt: 1,
+            updatedAt: 1,
+          },
         },
-        {
-          title: 1,
-          frontPart: 1,
-          type: 1,
-          tags: 1,
-          views: 1,
-          createdAt: 1,
-          updatedAt: 1,
-        },
-      );
+      ]);
       return {
         code: ApiErrorCode.SUCCESS,
         data: list,
@@ -94,6 +97,36 @@ export class BlogService {
       return {
         code: ApiErrorCode.BLOG_LIST_GET_ERROR,
         message: ApiErrorMessage.BLOG_LIST_GET_ERROR,
+      };
+    }
+  }
+
+  /**
+   * 最火5篇博文列表
+   */
+  async hotList() {
+    try {
+      const list = await this.blogModel.aggregate([
+        { $match: { published: true } },
+        { $sort: { views: -1 } },
+        { $limit: 5 },
+        {
+          $project: {
+            _id: 1,
+            title: 1,
+            createdAt: 1,
+            updatedAt: 1,
+          },
+        },
+      ]);
+      return {
+        code: ApiErrorCode.SUCCESS,
+        data: list,
+      };
+    } catch (e) {
+      return {
+        code: ApiErrorCode.BLOG_LIST_HOT_ERROR,
+        message: ApiErrorMessage.BLOG_LIST_HOT_ERROR,
       };
     }
   }
@@ -196,7 +229,30 @@ export class BlogService {
     } catch (e) {
       return {
         code: ApiErrorCode.BLOG_INFO_ERROR,
-        message: '查询博客分类标签出错',
+        message: ApiErrorMessage.BLOG_INFO_ERROR,
+      };
+    }
+  }
+
+  async getAuthorInfo() {
+    try {
+      const [blog, type, tags] = await Promise.all([
+        this.blogModel.distinct('_id'),
+        this.blogModel.distinct('type'),
+        this.blogModel.distinct('tags'),
+      ]);
+      return {
+        code: ApiErrorCode.SUCCESS,
+        data: {
+          blogs: blog.length,
+          types: type.length,
+          tags: tags.length,
+        },
+      };
+    } catch (e) {
+      return {
+        code: ApiErrorCode.BLOG_INFO_AUTHOR_ERROR,
+        message: ApiErrorMessage.BLOG_INFO_AUTHOR_ERROR,
       };
     }
   }
