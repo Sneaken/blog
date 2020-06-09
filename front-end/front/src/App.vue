@@ -9,13 +9,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { reportVisit } from '@/api/report';
-import { ActionType } from '@/enums/action-type';
 
 @Component
 export default class App extends Vue {
   async beforeMount() {
     try {
-      await reportVisit(ActionType.VISIT);
+      await reportVisit();
     } catch (e) {
       console.log(e);
     }

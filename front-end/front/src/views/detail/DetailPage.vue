@@ -3,20 +3,26 @@
     <!--header-->
     <main class="main">
       <article class="article-area">
-        <div class="blog-main">
-          <h1 v-if="data && data.title" class="title">{{ data.title }}</h1>
+        <div class="blog-main" v-if="data">
+          <h1 v-if="data.title" class="title">{{ data.title }}</h1>
+          <div class="meta-box">
+            <time v-if="data.createdAt" class="time" :datetime="time">{{
+              time
+            }}</time>
+            <span v-if="data.views" class="views">阅读 {{ data.views }}</span>
+          </div>
           <blog-content
             ref="section"
-            v-if="data && data.content"
+            v-if="data.content"
             :data="data.content"
           />
         </div>
-        <div class="blog-right" ref="right">
+        <div v-if="data" class="blog-right" ref="right">
           <article-author />
-          <article-types v-if="data && data.type" :types="data.type" />
-          <article-tags v-if="data && data.tags" :tags="data.tags" />
+          <article-types v-if="data.type" :types="data.type" />
+          <article-tags v-if="data.tags" :tags="data.tags" />
           <article-directory
-            v-if="data && data.content"
+            v-if="data.content"
             ref="directory"
             :class="[
               'directory',
@@ -48,6 +54,8 @@ import ArticleTags from '@/views/detail/components/ArticleTags.vue';
 import ArticleTypes from '@/views/detail/components/ArticleTypes.vue';
 import CardInfo from '@/views/blog/components/left/CardInfo.vue';
 import ArticleAuthor from '@/views/detail/components/ArticleAuthor.vue';
+import { time2day } from '@/utils/time';
+import { reportBlogViews } from '@/api/report';
 
 @Component({
   components: {
@@ -77,6 +85,9 @@ export default class DetailPage extends Vue {
   private top = Infinity;
   private titleTop: number[] = [];
 
+  private get time(): string | null {
+    return this.data && time2day(new Date(this.data.createdAt), true);
+  }
   private get children(): HTMLCollection {
     return this.right.children;
   }
@@ -89,12 +100,16 @@ export default class DetailPage extends Vue {
   private async mounted() {
     await this.getData();
     await this.getTitleTop();
-    this.aList[0]?.classList.add('current');
-    this._scrollHandler = throttle(40, this.handleScroll);
-    document.addEventListener('scroll', this._scrollHandler);
-    this.$once('hook:beforeDestroy', () => {
-      document.removeEventListener('scroll', this._scrollHandler);
-    });
+    await this.$nextTick();
+    if (this.directory.$el?.children?.length > 1) {
+      this.aList[0]?.classList.add('current');
+      this._scrollHandler = throttle(40, this.handleScroll);
+      document.addEventListener('scroll', this._scrollHandler);
+      this.$once('hook:beforeDestroy', () => {
+        document.removeEventListener('scroll', this._scrollHandler);
+      });
+    }
+    await this.reportViews();
   }
 
   async getData() {
@@ -144,6 +159,13 @@ export default class DetailPage extends Vue {
       }
     });
   }
+  private async reportViews() {
+    try {
+      await reportBlogViews(this.id);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }
 </script>
 
@@ -191,5 +213,14 @@ export default class DetailPage extends Vue {
 .directory-fixed {
   position: fixed;
   top: 19px;
+}
+.meta-box {
+  color: #909090;
+}
+.time {
+  letter-spacing: 1px;
+}
+.views {
+  margin-left: 0.5em;
 }
 </style>

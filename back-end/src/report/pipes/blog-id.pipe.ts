@@ -6,12 +6,13 @@ import {
 } from '../../common/enums/api-error-code.enum';
 
 @Injectable()
-export class UserIdPipe implements PipeTransform<string, string> {
+export class BlogIdPipe implements PipeTransform {
   transform(value: any): string {
-    if (typeof value !== 'string' || value.length !== 32) {
+    if (typeof value === 'undefined') return value;
+    if (typeof value !== 'string' || value.length !== 24) {
       throw new ApiException(
-        ApiErrorMessage.REPORT_USER_ID_INVALID,
-        ApiErrorCode.REPORT_USER_ID_INVALID,
+        ApiErrorMessage.REPORT_BLOG_ID_INVALID,
+        ApiErrorCode.REPORT_BLOG_ID_INVALID,
         HttpStatus.BAD_REQUEST,
       );
     }

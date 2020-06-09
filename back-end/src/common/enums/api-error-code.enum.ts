@@ -23,6 +23,7 @@ export enum ApiErrorCode {
   REPORT_CREATE_ERROR = 'C0100', // 上报失败
   REPORT_ACTION_TYPE_INVALID = 'C0101', // 行为无效
   REPORT_USER_ID_INVALID = 'C0102', // 用户ID无效
+  REPORT_BLOG_ID_INVALID = 'C0103', // 博文ID无效
 }
 
 export enum ApiErrorMessage {
@@ -50,4 +51,5 @@ export enum ApiErrorMessage {
   REPORT_CREATE_ERROR = '上报失败',
   REPORT_ACTION_TYPE_INVALID = '行为无效',
   REPORT_USER_ID_INVALID = '用户ID无效',
+  REPORT_BLOG_ID_INVALID = '博文ID无效',
 }

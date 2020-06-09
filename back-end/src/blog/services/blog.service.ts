@@ -234,6 +234,9 @@ export class BlogService {
     }
   }
 
+  /**
+   * 查询博主信息
+   */
   async getAuthorInfo() {
     try {
       const [blog, type, tags] = await Promise.all([
@@ -248,6 +251,24 @@ export class BlogService {
           types: type.length,
           tags: tags.length,
         },
+      };
+    } catch (e) {
+      return {
+        code: ApiErrorCode.BLOG_INFO_AUTHOR_ERROR,
+        message: ApiErrorMessage.BLOG_INFO_AUTHOR_ERROR,
+      };
+    }
+  }
+
+  /**
+   * 更新阅读量
+   */
+  async reportViews(_id: string) {
+    try {
+      // 高并发下没毛病 自动加1
+      await this.blogModel.findByIdAndUpdate(_id, { $inc: { views: 1 } });
+      return {
+        code: ApiErrorCode.SUCCESS,
       };
     } catch (e) {
       return {

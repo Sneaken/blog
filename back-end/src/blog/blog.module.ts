@@ -12,5 +12,6 @@ import { ReportModule } from '../report/report.module';
   ],
   controllers: [BlogController],
   providers: [BlogService],
+  exports: [BlogService],
 })
 export class BlogModule {}
