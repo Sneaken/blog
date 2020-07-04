@@ -2,7 +2,7 @@ import '@/utils/register-hooks';
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import store from './store';
+import { actions } from '@/store';
 import 'normalize.css';
 // import 'highlight.js/styles/vs2015.css';
 import '@/assets/styles/less/code-style.less';
@@ -15,10 +15,9 @@ import '@/utils/development.ts';
 
 Vue.config.productionTip = false;
 
-store.dispatch('init').then(() => {
+actions.init().then(() => {
   new Vue({
     router,
-    store,
     render: h => h(App),
   }).$mount('#app');
 });

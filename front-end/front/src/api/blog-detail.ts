@@ -1,5 +1,4 @@
 import axios from 'axios';
-import store from '@/store';
 
 export async function getBlog(id: string) {
   const url = `http://127.0.0.1:3000/blog/${id}`;
